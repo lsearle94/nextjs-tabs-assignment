@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import Breadcrumbs from './components/breadcrumbs';
 
+//ABOUT PAGE
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -184,7 +185,7 @@ export default function Home() {
     color: isDark ? '#fff' : '#000',
   };
 
-  // Styling
+  // Styling 
   const styles = {
     page: {
       backgroundColor: isDark ? '#121212' : '#ffffff',
