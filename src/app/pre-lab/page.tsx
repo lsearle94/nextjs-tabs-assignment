@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import Breadcrumbs from '../components/breadcrumbs'
 
+//Pre-Lab Page
 export default function PreLab() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [theme, setTheme] = useState<'light' | 'dark'>('light');
