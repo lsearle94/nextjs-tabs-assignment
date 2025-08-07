@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import Breadcrumbs from '../components/breadcrumbs'
 
+//Coding-Races Page
 export default function CodingRaces() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [theme, setTheme] = useState<'light' | 'dark'>('light');
