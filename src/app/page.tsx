@@ -70,7 +70,7 @@ export default function Home() {
 
   const isDark = theme === 'dark';
 
-  // Add/Remove Tabs
+  // Add Tabs
   const addTab = () => {
     if (steps.length >= 15) return;
     const newStepNumber = steps.length + 1;
@@ -78,6 +78,7 @@ export default function Home() {
     setStepContents([...stepContents, `Content for Step ${newStepNumber} goes here.`]);
   };
   
+  //Allow removal of tabs
   const removeTab = () => {
     if (steps.length <= 1) return;
     setSteps(steps.slice(0, -1));
