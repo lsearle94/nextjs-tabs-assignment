@@ -413,7 +413,7 @@ export default function Home() {
         </header>
 
         <main>
-          <Breadcrumbs activeTab={activeTab} />
+          <Breadcrumbs activeTab={activeTab} /> 
 
           <div style={styles.tabsContainer}>
             <div style={styles.stepsColumn}>
