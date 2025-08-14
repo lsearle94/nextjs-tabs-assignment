@@ -60,7 +60,7 @@ export default function Home() {
     localStorage.setItem('activeTab', path);
   }
 
-  // Toggle for light/dark mode
+  // Toggle for light/dark mode functionality
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
@@ -396,7 +396,7 @@ export default function Home() {
                 <div style={{ ...styles.bar, ...(menuOpen ? styles.bar2Open : {}) }}></div>
                 <div style={{ ...styles.bar, ...(menuOpen ? styles.bar3Open : {}) }}></div>
               </div>
-              {/* Toggle Switch (Light/Dark Mode) */}
+              {/* Toggle Switch (Light/Dark Mode Functionality) */}
               <div onClick={toggleTheme} style={styles.switchContainer}>
                 <div style={styles.switchCircle}></div>
               </div>
