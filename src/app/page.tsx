@@ -413,6 +413,7 @@ export default function Home() {
         </header>
 
         <main>
+          {/* Link breadcrumbs */}
           <Breadcrumbs activeTab={activeTab} /> 
 
           <div style={styles.tabsContainer}>
