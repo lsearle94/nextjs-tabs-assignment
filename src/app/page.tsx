@@ -8,7 +8,7 @@ import Breadcrumbs from './components/breadcrumbs';
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Detect theme
+  // Detect theme (check localStorage)
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     if (typeof window !== 'undefined') { 
       const savedTheme = localStorage.getItem('theme'); 
