@@ -88,7 +88,7 @@ export default function Home() {
     }
   };
 
-  // Generate the HTML output
+  // Generate the HTML output (displayed in output box)
   const generateOutput = () => {
     return `
     <!DOCTYPE html>
