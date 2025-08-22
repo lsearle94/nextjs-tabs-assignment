@@ -173,6 +173,7 @@ export default function Home() {
     `.trim();
   };
 
+  //Allow editing of steps
   const [editingStep, setEditingStep] = useState<number | null>(null);
 
   //Copy contents of the output to users clipboard
