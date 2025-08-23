@@ -179,6 +179,11 @@ export default function Home() {
     alert("Output has been copied to clipboard");
   };
 
+  const linkHoverStyle = {
+    backgroundColor: isDark ? '#555' : 'rgba(189, 213, 241, 0.94)',
+    color: isDark ? '#fff' : '#000',
+  };
+
   // Styling
   const styles = {
     page: {
@@ -188,16 +193,19 @@ export default function Home() {
       padding: '20px',
     },
     header: {
-      backgroundColor: isDark ? '#1e1e1e' : '#f0f0f0',
+      backgroundColor: isDark ? 'linear-gradient(90deg, #1e1e1e, #333)' : 'linear-gradient(90deg, #4facfe, #00f2fe)',
       padding: '25px 25px',
       borderBottom: `2px solid ${isDark ? '#444' : '#ccc'}`,
       position: 'relative' as 'relative',
+      borderRadius: '8px',
+      boxShadow: isDark ? '0 4px 6px rgba(34, 32, 32, 1)' : '0 4px 6px rgba(204, 200, 200, 1)',
     },
     nav: {
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
       marginTop: '10px',
+      gap: '15px',
     },
     leftLinks: {
       display: 'flex',
@@ -210,14 +218,14 @@ export default function Home() {
       position: 'relative' as 'relative',
     },
     link: {
-      color: isDark ? 'lightblue' : 'blue',
+      color: isDark ? '#5fa0e2ff' : '#185b7aff',
       textDecoration: 'none',
       padding: '5px 10px',
       borderRadius: '5px',
       transition: 'background-color 0.3s, color 0.3s',
     },
     aboutLink: {
-      color: isDark ? 'violet' : 'purple',
+      color: isDark ? '#5fa0e2ff' : '#185b7aff',
       textDecoration: 'none',
     },
     dropdown: {
@@ -374,10 +382,10 @@ export default function Home() {
           <h2>Home / Tabs</h2>
           <nav style={styles.nav}>
             <div style={styles.leftLinks}>
-              <Link href="/" style={{ ...styles.link, fontWeight: activeTab === '/' ? 'bold' : 'normal', textDecoration: activeTab === '/' ? 'underline' : 'none' }} onClick={() => handleMenuClick('/')}>Tabs</Link>
-              <Link href="/pre-lab" style={{ ...styles.link, fontWeight: activeTab === '/pre-lab' ? 'bold' : 'normal', textDecoration: activeTab === '/pre-lab' ? 'underline' : 'none' }} onClick={() => handleMenuClick('/pre-lab')}>Pre-Lab Questions</Link>
-              <Link href="/escape-room" style={{ ...styles.link, fontWeight: activeTab === '/escape-room' ? 'bold' : 'normal', textDecoration: activeTab === '/escape-room' ? 'underline' : 'none' }} onClick={() => handleMenuClick('/escape-room')}>Escape Room</Link>
-              <Link href="/coding-races" style={{ ...styles.link, fontWeight: activeTab === '/coding-races' ? 'bold' : 'normal', textDecoration: activeTab === '/coding-races' ? 'underline' : 'none' }} onClick={() => handleMenuClick('/coding-races')}>Coding Races</Link>
+              <Link href="/" style={{ ...styles.link, fontWeight: activeTab === '/' ? 'bold' : 'normal', textDecoration: activeTab === '/' ? 'underline' : 'none' }} onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = linkHoverStyle.backgroundColor)} onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')} onClick={() => handleMenuClick('/')}>Tabs</Link>
+              <Link href="/pre-lab" style={{ ...styles.link, fontWeight: activeTab === '/pre-lab' ? 'bold' : 'normal', textDecoration: activeTab === '/pre-lab' ? 'underline' : 'none' }} onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = linkHoverStyle.backgroundColor)} onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')} onClick={() => handleMenuClick('/pre-lab')}>Pre-Lab Questions</Link>
+              <Link href="/escape-room" style={{ ...styles.link, fontWeight: activeTab === '/escape-room' ? 'bold' : 'normal', textDecoration: activeTab === '/escape-room' ? 'underline' : 'none' }} onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = linkHoverStyle.backgroundColor)} onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')} onClick={() => handleMenuClick('/escape-room')}>Escape Room</Link>
+              <Link href="/coding-races" style={{ ...styles.link, fontWeight: activeTab === '/coding-races' ? 'bold' : 'normal', textDecoration: activeTab === '/coding-races' ? 'underline' : 'none' }} onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = linkHoverStyle.backgroundColor)} onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')} onClick={() => handleMenuClick('/coding-races')}>Coding Races</Link>
             </div>
             <div style={styles.rightLinks}>
               <Link href="/about" style={{ ...styles.aboutLink, fontWeight: activeTab === '/about' ? 'bold' : 'normal', textDecoration: activeTab === '/about' ? 'underline' : 'none' }} onClick={() => handleMenuClick('/about')}>About</Link>
