@@ -182,6 +182,7 @@ export default function Home() {
     alert("Output has been copied to clipboard");
   };
 
+  //Hover functionality
   const linkHoverStyle = {
     backgroundColor: isDark ? '#555' : 'rgba(189, 213, 241, 0.94)',
     color: isDark ? '#fff' : '#000',
