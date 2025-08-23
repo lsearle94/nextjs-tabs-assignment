@@ -462,9 +462,10 @@ export default function Home() {
                 fontSize: '1rem',
                 borderRadius: '4px',
                 border: `1px solid ${isDark ? '#555' : '#ccc'}`,
-                backgroundColor: isDark ? '#222' : '#fff',
+                backgroundColor: isDark ? '#333' : activeStep !== null ? '#dceff8ff' : '#fff',
                 color: isDark ? '#fff' : '#000',
                 padding: '10px',
+                transition: 'background-color 0.3s ease',
               }}
               value={stepContents[activeStep]}
               onChange={(e) => {
