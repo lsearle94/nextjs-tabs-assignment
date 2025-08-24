@@ -377,7 +377,7 @@ export default function Home() {
 
   };
 
-  // Page Content
+  // Page Content (About Page)
   return (
     <div>
       <div style={styles.page}>
