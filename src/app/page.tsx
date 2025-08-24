@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import Breadcrumbs from './components/breadcrumbs';
 
-//ABOUT PAGE
+//TABS PAGE
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
 
