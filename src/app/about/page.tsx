@@ -203,8 +203,14 @@ export default function About() {
                     {/* Breadcrumbs*/}
                     <Breadcrumbs activeTab={activeTab} />
 
-                    <h1>About</h1>
-                    <p>20960191</p>
+                    <h1>Please see below video explaining how to use and navigate through this website</h1>
+                    
+
+                    <video controls width="100%" style={{maxWidth: '800px', display: 'block', margin: '20px auto', borderRadius: '8px'}}>
+                        <source src="/CSE3CWARecording.mp4" type="video/mp4"/>
+                    </video>
+
+
                 </main>  
             </div>
 
