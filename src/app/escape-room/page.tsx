@@ -9,6 +9,10 @@ export default function EscapeRoom() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [theme, setTheme] = useState<'light' | 'dark'>('light');
     const [activeTab, setActiveTab] = useState<string>('/escape-room');
+    //Timer variables
+    const [timeLeft, setTimeLeft] = useState<number | null>(null);
+    const [inputTime, setInputTime] = useState<string>('');
+    const [isRunning, setIsRunning] = useState(false);
 
     //Initialise active tab from localStorage
     useEffect(() => {
@@ -43,6 +47,38 @@ export default function EscapeRoom() {
     const linkHoverStyle = {
         backgroundColor: isDark ? '#555' : 'rgba(189, 213, 241, 0.94)',
         color: isDark ? '#fff' : '#000',
+    };
+
+    //Countdown effect
+    useEffect(() => {
+        if (!isRunning || timeLeft === null) return;
+        if (timeLeft <= 0) {
+            setIsRunning(false);
+            alert("Time is up! You did not escape.");
+            return;
+        }
+    const timer = setInterval(() => {
+        setTimeLeft(prev => (prev !== null ? prev - 1 : 0));
+    }, 1000);
+    return () => clearInterval(timer);
+    }, [isRunning, timeLeft]);
+
+    //Format seconds
+    const formatTime = (seconds: number) => {
+        const m = Math.floor(seconds / 60);
+        const s = seconds % 60;
+        return `${m}:${s.toString().padStart(2, '0')}`;
+    };
+
+    //Time handler
+    const handleStartTimer = () => {
+        const seconds = parseInt(inputTime, 10);
+        if (isNaN(seconds) || seconds <= 0) {
+            alert("Please enter valid number of seconds");
+            return;
+        }
+        setTimeLeft(seconds);
+        setIsRunning(true);
     };
 
     //Page Styling
@@ -205,6 +241,16 @@ export default function EscapeRoom() {
 
                     <h1>Escape Room</h1>
                     <p>20960191</p>
+
+                    {/*Timer UI*/}
+                    <div style={{margin: "20px 0", padding: "15px", border: "1px solid gray", borderRadius: "8px"}}>
+                        <h3>Escape Room Timer</h3>
+                        <input type="number" value={inputTime} onChange={(e) => setInputTime(e.target.value)} placeholder="Enter seconds" style={{marginRight: "10px", padding: "5px"}}/>
+                        <button onClick={handleStartTimer} disabled={isRunning} style={{padding: "5px 10px"}}>Start Timer</button>
+                        {timeLeft !== null && (
+                            <p style={{ marginTop: "10px", fontWeight: "bold"}}>Time Left: {formatTime(timeLeft)}</p>
+                        )}
+                    </div>
                 </main>  
             </div>
 
