@@ -258,6 +258,21 @@ export default function EscapeRoom() {
             width: "70%",
             height: "700px",
             borderRadius: "8px",
+            position: "relative" as "relative",
+            zIndex: 1,
+        },
+        instructionBox: {
+            flex: "1.2",
+            marginRight: "-80px",
+            padding: "30px",
+            backgroundColor: isDark ? "rgba(30,30,30,0.9)" : "rgba(255,255,255,0.9)",
+            borderRadius: "12px",
+            boxShadow: isDark ? "0 4px 8px rgba(0,0,0,0.7)" : "0 4px 8px rgba(0,0,0,0.15)",
+            color: isDark ? "#fff" : "#000",
+            fontSize: "1rem",
+            lineHeight: "1.6",
+            zIndex: 2,
+            position: "relative" as "relative",
         },
     };
 
@@ -325,6 +340,17 @@ export default function EscapeRoom() {
                     </div>
                     {/* Image block aligned to the right */}
                     <div style={styles.imageWrapper}>
+                        {/* Instruction Box*/}
+                        <div style={styles.instructionBox}>
+                            <h3>How to start the Escape Room</h3>
+                            <ol>
+                                <li>1. Set the timer (e.g., 10 minutes).</li>
+                                <li>2. Click <strong>Start Timer </strong></li>
+                                <li>3. When the timer begins, Stage 1 will appear.</li>
+                                <li>4. Solve all coding challenges before time runs out!</li>
+                            </ol>
+                        </div>
+
                         <div style={styles.imageBox}></div>
                     </div>
                 </main>  
