@@ -221,6 +221,18 @@ export default function EscapeRoom() {
             marginRight: "10px",
             transition: "border-color 0.3s ease, box-shadow 0.3s ease",
         },
+        timerDisplay: {
+            marginTop: "15px",
+            fontWeight: "bold",
+            fontSize: "1.5rem",
+            textAlign: "center" as "center",
+            padding: "10px",
+            borderRadius: "6px",
+            backgroundColor: isDark ? "#1e1e1e" : "#f4f4f4",
+            color: isDark ? "#ff5555" : "#cc0000",
+            boxShadow: isDark ? "0 0 10px rgba(255, 85, 85, 0.6)" : "0 0 10px rgba(204, 0, 0, 0.3)",
+            transition: "all 0.2s ease",
+        },
     };
 
     return(
@@ -278,7 +290,7 @@ export default function EscapeRoom() {
                         onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = isDark ? "#5fa0e2" : "#007bff")}
                         >Start Timer</button>
                         {timeLeft !== null && (
-                            <p style={{ marginTop: "10px", fontWeight: "bold"}}>Time Left: {formatTime(timeLeft)}</p>
+                            <div style={styles.timerDisplay}>Time Left: {formatTime(timeLeft)}</div>
                         )}
                     </div>
                 </main>  
