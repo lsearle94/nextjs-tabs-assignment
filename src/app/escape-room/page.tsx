@@ -245,6 +245,20 @@ export default function EscapeRoom() {
             boxShadow: isDark ? "0 0 10px rgba(255, 85, 85, 0.6)" : "0 0 10px rgba(204, 0, 0, 0.3)",
             transition: "all 0.2s ease",
         },
+        imageWrapper: {
+            display: "flex",
+            justifyContent: "flex-end", 
+            marginTop: "30px",
+        },
+        imageBox: {
+            backgroundImage: "url('/kotak-kanan-9M-27mgz8Vg-unsplash.jpg')",
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center right",
+            width: "70%",
+            height: "700px",
+            borderRadius: "8px",
+        },
     };
 
     return(
@@ -308,6 +322,10 @@ export default function EscapeRoom() {
                             }}>Time Left: {formatTime(timeLeft)}</div>
                             </>
                         )}
+                    </div>
+                    {/* Image block aligned to the right */}
+                    <div style={styles.imageWrapper}>
+                        <div style={styles.imageBox}></div>
                     </div>
                 </main>  
             </div>
