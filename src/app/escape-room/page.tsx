@@ -196,6 +196,31 @@ export default function EscapeRoom() {
             borderTop: `2px solid ${isDark ? '#444' : '#ccc'}`,
             color: isDark ? '#fff' : '#000',
         },
+        timerButton: {
+            padding: "10px 20px",
+            border: "none",
+            borderRadius: "6px",
+            cursor: "pointer",
+            fontSize: "1rem",
+            fontWeight: "bold",
+            backgroundColor: isDark ? "#5fa0e2" : "#007bff",
+            color: "#fff",
+            transition: "background-color 0.3s ease",
+        },
+        timerButtonHover: {
+            backgroundColor: isDark ? "#478ac9" : "#0056b3",
+        },
+        timerInput: {
+            padding: "10px",
+            borderRadius: "6px",
+            border: '1px solid ${isDark ? "#555" : "#ccc"}',
+            outline: "none",
+            fontSize: "1rem",
+            backgroundColor: isDark ? "#222" : "#fff",
+            color: isDark ? "#fff" : "#000",
+            marginRight: "10px",
+            transition: "border-color 0.3s ease, box-shadow 0.3s ease",
+        },
     };
 
     return(
@@ -245,8 +270,13 @@ export default function EscapeRoom() {
                     {/*Timer UI*/}
                     <div style={{margin: "20px 0", padding: "15px", border: "1px solid gray", borderRadius: "8px"}}>
                         <h3>Escape Room Timer</h3>
-                        <input type="number" value={inputTime} onChange={(e) => setInputTime(e.target.value)} placeholder="Enter seconds" style={{marginRight: "10px", padding: "5px"}}/>
-                        <button onClick={handleStartTimer} disabled={isRunning} style={{padding: "5px 10px"}}>Start Timer</button>
+                        <input type="number" value={inputTime} onChange={(e) => setInputTime(e.target.value)} placeholder="Enter seconds" style={styles.timerInput}
+                        onFocus={(e) => (e.currentTarget.style.boxShadow = "0 0 6px rgba(0, 123, 255, 0.7")}
+                        onBlur={(e) => (e.currentTarget.style.boxShadow = "none")}/>
+                        <button onClick={handleStartTimer} disabled={isRunning} style={{...styles.timerButton,...(isRunning ? {opacity: 0.6, cursor: "not-allowed"} : {}),}}
+                        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = isDark ? "#478ac9" : "#0056b3")}
+                        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = isDark ? "#5fa0e2" : "#007bff")}
+                        >Start Timer</button>
                         {timeLeft !== null && (
                             <p style={{ marginTop: "10px", fontWeight: "bold"}}>Time Left: {formatTime(timeLeft)}</p>
                         )}
