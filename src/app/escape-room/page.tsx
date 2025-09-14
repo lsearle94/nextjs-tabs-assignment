@@ -81,6 +81,18 @@ export default function EscapeRoom() {
         setIsRunning(true);
     };
 
+    //Pulsing effect for timer
+    const pulseAnimation = {
+        animation: "pulse 1s infinite",
+    };
+    const globalStyles = `
+        @keyframes pulse {
+            0% {transform: scale(1); opacity: 1;}
+            50% {transform: scale(1.1); opacity: 0.8;}
+            100% {transform: scale(1); opacity: 1;}
+        }
+    `;
+
     //Page Styling
     const styles = {
         page: {
@@ -213,7 +225,7 @@ export default function EscapeRoom() {
         timerInput: {
             padding: "10px",
             borderRadius: "6px",
-            border: '1px solid ${isDark ? "#555" : "#ccc"}',
+            border: `1px solid ${isDark ? "#555" : "#ccc"}`,
             outline: "none",
             fontSize: "1rem",
             backgroundColor: isDark ? "#222" : "#fff",
@@ -290,7 +302,11 @@ export default function EscapeRoom() {
                         onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = isDark ? "#5fa0e2" : "#007bff")}
                         >Start Timer</button>
                         {timeLeft !== null && (
-                            <div style={styles.timerDisplay}>Time Left: {formatTime(timeLeft)}</div>
+                            <>
+                            <style>{globalStyles}</style>
+                            <div style={{...styles.timerDisplay,...(timeLeft <= 10 ? pulseAnimation : {}), //Pulse on the last 10 seconds
+                            }}>Time Left: {formatTime(timeLeft)}</div>
+                            </>
                         )}
                     </div>
                 </main>  
