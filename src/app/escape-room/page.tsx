@@ -101,6 +101,9 @@ export default function EscapeRoom() {
         alert("You stopped the game, you did not escape!");
     };
 
+    //Game Play State
+    const [stage, setStage] = useState<number>(0); //Instructions state = 0, Stage 1 state = 1.
+
     //Page Styling
     const styles = {
         page: {
@@ -259,7 +262,7 @@ export default function EscapeRoom() {
             marginTop: "30px",
         },
         imageBox: {
-            backgroundImage: "url('/kotak-kanan-9M-27mgz8Vg-unsplash.jpg')",
+            backgroundImage: "url('/kotak-kanan-9M-27mgz8Vg-unsplash.jpg')", //Background image credit: Kotak Kanon on 'Unsplash'
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center right",
@@ -350,21 +353,35 @@ export default function EscapeRoom() {
                             </>
                         )}
                     </div>
-                    {/* Image block aligned to the right */}
-                    <div style={styles.imageWrapper}>
-                        {/* Instruction Box*/}
-                        <div style={styles.instructionBox}>
-                            <h3>How to start the Escape Room</h3>
-                            <ol>
-                                <li>1. Set the timer (e.g., 10 minutes).</li>
-                                <li>2. Click <strong>Start Timer </strong></li>
-                                <li>3. When the timer begins, Stage 1 will appear.</li>
-                                <li>4. Solve all coding challenges before time runs out!</li>
-                            </ol>
+                    {stage === 0 && (        
+                        <div style={styles.imageWrapper}>
+                            {/* Image block aligned to the right */}
+                            <div style={styles.instructionBox}>
+                                {/* Instruction Box*/}
+                                <h3>How to start the Escape Room</h3>
+                                <ol>
+                                    <li>1. Set the timer (e.g., 10 minutes).</li>
+                                    <li>2. Click <strong>Start Timer </strong></li>
+                                    <li>3. When the timer begins, Stage 1 will appear.</li>
+                                    <li>4. Solve all coding challenges before time runs out!</li>
+                                    <li> </li>
+                                    <li>Tip: For beginners, 20 minutes is suggested</li>
+                                    <li>Experts, try escaping in 15!</li>
+                                </ol>
+                                {/* Escape Button*/}
+                                <button onClick={() => {
+                                    if (!isRunning) {
+                                        alert("Please start the timer before beginning the escape challenge");
+                                    } else {
+                                        setStage(1); //move to stage 1
+                                    }
+                                }}
+                                style={{marginTop: "15px", padding: "10px 20px", borderRadius: "6px", border: "none", backgroundColor: "#28a745", color: "#fff", fontWeight: "bold", cursor: "pointer"}}
+                                >Let's Escape!</button>
+                            </div>
+                            <div style={styles.imageBox}></div>
                         </div>
-
-                        <div style={styles.imageBox}></div>
-                    </div>
+                    )}
                 </main>  
             </div>
 
