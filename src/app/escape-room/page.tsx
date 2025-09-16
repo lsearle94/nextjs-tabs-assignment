@@ -54,6 +54,7 @@ export default function EscapeRoom() {
         if (!isRunning || timeLeft === null) return;
         if (timeLeft <= 0) {
             setIsRunning(false);
+            setStage(0); //Reset to stage 0 (Instructions page)
             alert("Time is up! You did not escape.");
             return;
         }
@@ -98,6 +99,7 @@ export default function EscapeRoom() {
     const handleStopTimer = () => {
         setIsRunning(false);
         setTimeLeft(null);
+        setStage(0); //Reset to stage 0 (Instruction page)
         alert("You stopped the game, you did not escape!");
     };
 
