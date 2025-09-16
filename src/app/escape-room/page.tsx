@@ -94,6 +94,13 @@ export default function EscapeRoom() {
         }
     `;
 
+    // Stop timer button
+    const handleStopTimer = () => {
+        setIsRunning(false);
+        setTimeLeft(null);
+        alert("You stopped the game, you did not escape!");
+    };
+
     //Page Styling
     const styles = {
         page: {
@@ -331,6 +338,10 @@ export default function EscapeRoom() {
                         onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = isDark ? "#478ac9" : "#0056b3")}
                         onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = isDark ? "#5fa0e2" : "#007bff")}
                         >Start Timer</button>
+                        <button onClick={handleStopTimer} disabled={!isRunning} style={{...styles.timerButton, backgroundColor: "red"}}
+                        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#cc0000")}
+                        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "red")}
+                        >Stop Timer</button>
                         {timeLeft !== null && (
                             <>
                             <style>{globalStyles}</style>
