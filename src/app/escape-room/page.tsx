@@ -72,9 +72,10 @@ export default function EscapeRoom() {
 
     //Time handler
     const handleStartTimer = () => {
-        const seconds = parseInt(inputTime, 10);
-        if (isNaN(seconds) || seconds <= 0) {
-            alert("Please enter valid number of seconds");
+        const minutes = parseInt(inputTime, 10);
+        const seconds = minutes * 60;
+        if (isNaN(minutes) || minutes <= 0) {
+            alert("Please enter valid number of minutes");
             return;
         }
         setTimeLeft(seconds);
@@ -323,7 +324,7 @@ export default function EscapeRoom() {
                     {/*Timer UI*/}
                     <div style={{margin: "20px 0", padding: "15px", border: "1px solid gray", borderRadius: "8px"}}>
                         <h3>Escape Room Timer</h3>
-                        <input type="number" value={inputTime} onChange={(e) => setInputTime(e.target.value)} placeholder="Enter seconds" style={styles.timerInput}
+                        <input type="number" value={inputTime} onChange={(e) => setInputTime(e.target.value)} placeholder="Enter minutes" style={styles.timerInput}
                         onFocus={(e) => (e.currentTarget.style.boxShadow = "0 0 6px rgba(0, 123, 255, 0.7")}
                         onBlur={(e) => (e.currentTarget.style.boxShadow = "none")}/>
                         <button onClick={handleStartTimer} disabled={isRunning} style={{...styles.timerButton,...(isRunning ? {opacity: 0.6, cursor: "not-allowed"} : {}),}}
