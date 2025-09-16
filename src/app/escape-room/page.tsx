@@ -109,6 +109,17 @@ export default function EscapeRoom() {
     //Game Play State
     const [stage, setStage] = useState<number>(0); //Instructions state = 0, Stage 1 state = 1.
 
+    //Stage 1 functions
+    const [userAnswer, setUserAnswer] = useState<string>("");
+    const[feedback, setFeedback] = useState<string>("");
+    const checkAnswer = () => {
+        if (userAnswer.trim() === "Find the Key!") {
+            setFeedback("Correct!");
+        } else {
+            setFeedback("Not quite there, keep trying!")
+        }
+    };
+
     //Page Styling
     const styles = {
         page: {
@@ -333,9 +344,6 @@ export default function EscapeRoom() {
                     {/* Breadcrumbs*/}
                     <Breadcrumbs activeTab={activeTab} />
 
-                    <h1>Escape Room</h1>
-                    <p>20960191</p>
-
                     {/*Timer UI*/}
                     <div style={{margin: "20px 0", padding: "15px", border: "1px solid gray", borderRadius: "8px"}}>
                         <h3>Escape Room Timer</h3>
@@ -385,6 +393,31 @@ export default function EscapeRoom() {
                                 >Let's Escape!</button>
                             </div>
                             <div style={styles.imageBox}></div>
+                        </div>
+                    )}
+
+                    {/* Stage 1*/}
+                    {stage === 1 && (
+                        <div style={{marginTop: "30px", padding: "20px", border: "1px solid gray", borderRadius: "8px"}}>
+                            <h2>Stage 1: Fix the code</h2>
+                            <p>The code you see here is corrupted! In order to escape this room, you must fix the phrase so it reads this exactly: <strong>Find the Key!</strong></p>
+                            {/* Corrupted code*/}
+                            <div style={{padding: "15px", margin: "15px 0", backgroundColor: isDark ? "#333" : "#f4f4f4", fontFamily: "monospace", fontSize: "1.2rem", textAlign: "center"}}
+                            >FiNd ThE kEy?</div>
+                            {/* User input field*/}
+                            <input type="text" placeholder="Please enter correct phrase.." style={{...styles.timerInput, width: "60%"}}value={userAnswer} onChange={(e) => setUserAnswer(e.target.value)}/>
+                            <button onClick={checkAnswer} style={{...styles.timerButton, marginLeft: "10px"}}>Submit Answer</button>
+                            {/* Feedback for user input*/}
+                            {feedback && (
+                                <p style={{marginTop: "10px", color: feedback === "Correct!" ? "green" : "red"}}>{feedback}</p>
+                            )}
+                            {/* Next button*/}
+                            {feedback === "Correct!" && (
+                                <button onClick={() => setStage(2)}
+                                style={{marginTop: "15px", padding: "10px 20px", borderRadius: "6px", border: "none", backgroundColor: "#28a745", color: "#fff", fontWeight: "bold", cursor: "pointer"}}>
+                                    Proceed to next level
+                                </button>
+                            )}
                         </div>
                     )}
                 </main>  
