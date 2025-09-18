@@ -118,8 +118,9 @@ export default function EscapeRoom() {
     //Stage 1 functions
     const [userAnswer, setUserAnswer] = useState<string>("");
     const[feedback, setFeedback] = useState<string>("");
+
     const checkAnswer = () => {
-        if (userAnswer.trim() === "Find the Key!") {
+        if (userAnswer.trim() === 'console.log("Find the Key!");') {
             setFeedback("Correct!");
         } else {
             setFeedback("Not quite there, keep trying!")
@@ -412,10 +413,14 @@ export default function EscapeRoom() {
                             <p>In order to begin this escape challenge, you must first unlock the door to enter.</p>
                             <p>The code you see here is corrupted! In order to escape this room, you must fix the phrase so it reads this exactly: <strong>Find the Key!</strong></p>
                             {/* Corrupted code*/}
-                            <div style={{padding: "15px", margin: "15px 0", backgroundColor: isDark ? "#333" : "#f4f4f4", fontFamily: "monospace", fontSize: "1.2rem", textAlign: "center"}}
-                            >FiNd ThE kEy?</div>
+                            <div style={{padding: "15px", margin: "15px 0", backgroundColor: isDark ? "#333" : "#f4f4f4", fontFamily: "monospace", fontSize: "1.2rem", textAlign: "left", whiteSpace: "pre-wrap"}}
+                            >{`function escapeRoom() {
+                                // Fix the line below!
+                                console.log("FiNd ThE kEy?");
+                                }`}
+                            </div>
                             {/* User input field*/}
-                            <input type="text" placeholder="Please enter correct phrase.." style={{...styles.timerInput, width: "60%"}}value={userAnswer} onChange={(e) => setUserAnswer(e.target.value)}/>
+                            <input type="text" placeholder='Please type the corrected line to find the key (e.g., console.log("Finf the Key!");)'style={{...styles.timerInput, width: "80%"}}value={userAnswer} onChange={(e) => setUserAnswer(e.target.value)}/>
                             <button onClick={checkAnswer} style={{...styles.timerButton, marginLeft: "10px"}}>Submit Answer</button>
                             {/* Feedback for user input*/}
                             {feedback && (
