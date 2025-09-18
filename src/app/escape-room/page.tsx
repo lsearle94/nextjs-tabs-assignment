@@ -58,7 +58,7 @@ export default function EscapeRoom() {
             setInputTime("") //Clear input box
             setStage(0); //Reset to stage 0 (Instructions page)
             //Reset Stage 1 
-            setUserAnswer("");
+            setUserAnswer(initialCode);
             setFeedback("");
             alert("Time is up! You did not escape.");
             return;
@@ -107,7 +107,7 @@ export default function EscapeRoom() {
         setInputTime("") //Clear the input box
         setStage(0); //Reset to stage 0 (Instruction page)
         //Reset the Stage 1 data
-        setUserAnswer("");
+        setUserAnswer(initialCode);
         setFeedback("");
         alert("You stopped the game, you did not escape!");
     };
@@ -116,11 +116,16 @@ export default function EscapeRoom() {
     const [stage, setStage] = useState<number>(0); //Instructions state = 0, Stage 1 state = 1.
 
     //Stage 1 functions
-    const [userAnswer, setUserAnswer] = useState<string>("");
+    const initialCode = `function escapeRoom() {
+        let clue1 = "The door is locked...";
+        let clue2 = "Try fixing the code...";
+        // Broken line below - Fix to open the door!
+        console.log("FiNd ThE kEy?");
+    }`;
+    const [userAnswer, setUserAnswer] = useState<string>(initialCode);
     const[feedback, setFeedback] = useState<string>("");
-
     const checkAnswer = () => {
-        if (userAnswer.trim() === 'console.log("Find the Key!");') {
+        if (userAnswer.includes('console.log("Find the Key!");')) {
             setFeedback("Correct!");
         } else {
             setFeedback("Not quite there, keep trying!")
@@ -394,7 +399,7 @@ export default function EscapeRoom() {
                                         alert("Please start the timer before beginning the escape challenge");
                                     } else {
                                         //Reset Stage 1
-                                        setUserAnswer("");
+                                        setUserAnswer(initialCode);
                                         setFeedback("");
                                         setStage(1); //move to stage 1
                                     }
@@ -412,15 +417,11 @@ export default function EscapeRoom() {
                             <h2>Stage 1: Fix the code</h2>
                             <p>In order to begin this escape challenge, you must first unlock the door to enter.</p>
                             <p>The code you see here is corrupted! In order to escape this room, you must fix the phrase so it reads this exactly: <strong>Find the Key!</strong></p>
-                            {/* Corrupted code*/}
-                            <div style={{padding: "15px", margin: "15px 0", backgroundColor: isDark ? "#333" : "#f4f4f4", fontFamily: "monospace", fontSize: "1.2rem", textAlign: "left", whiteSpace: "pre-wrap"}}
-                            >{`function escapeRoom() {
-                                // Fix the line below!
-                                console.log("FiNd ThE kEy?");
-                                }`}
-                            </div>
-                            {/* User input field*/}
-                            <input type="text" placeholder='Please type the corrected line to find the key (e.g., console.log("Finf the Key!");)'style={{...styles.timerInput, width: "80%"}}value={userAnswer} onChange={(e) => setUserAnswer(e.target.value)}/>
+                            {/* Editable Code Section*/}
+                            <textarea
+                                value={userAnswer} onChange={(e) => setUserAnswer(e.target.value)} 
+                                style={{width:"100%",height:"200px",padding:"15px",margin:"15px 0",backgroundColor:isDark ? "#333" : "#f4f4f4",fontFamily:"monospace",fontSize:"1rem",color: isDark ? "#fff" : "#000",border:"1px solid gray",borderRadius:"8px",whiteSpace:"pre",lineHeight:"1.4"}}
+                            />
                             <button onClick={checkAnswer} style={{...styles.timerButton, marginLeft: "10px"}}>Submit Answer</button>
                             {/* Feedback for user input*/}
                             {feedback && (
