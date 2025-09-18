@@ -400,6 +400,7 @@ export default function EscapeRoom() {
                     {stage === 1 && (
                         <div style={{marginTop: "30px", padding: "20px", border: "1px solid gray", borderRadius: "8px"}}>
                             <h2>Stage 1: Fix the code</h2>
+                            <p>In order to begin this escape challenge, you must first unlock the door to enter.</p>
                             <p>The code you see here is corrupted! In order to escape this room, you must fix the phrase so it reads this exactly: <strong>Find the Key!</strong></p>
                             {/* Corrupted code*/}
                             <div style={{padding: "15px", margin: "15px 0", backgroundColor: isDark ? "#333" : "#f4f4f4", fontFamily: "monospace", fontSize: "1.2rem", textAlign: "center"}}
