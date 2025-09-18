@@ -57,6 +57,9 @@ export default function EscapeRoom() {
             setTimeLeft(null);
             setInputTime("") //Clear input box
             setStage(0); //Reset to stage 0 (Instructions page)
+            //Reset Stage 1 
+            setUserAnswer("");
+            setFeedback("");
             alert("Time is up! You did not escape.");
             return;
         }
@@ -103,6 +106,9 @@ export default function EscapeRoom() {
         setTimeLeft(null);
         setInputTime("") //Clear the input box
         setStage(0); //Reset to stage 0 (Instruction page)
+        //Reset the Stage 1 data
+        setUserAnswer("");
+        setFeedback("");
         alert("You stopped the game, you did not escape!");
     };
 
@@ -386,6 +392,9 @@ export default function EscapeRoom() {
                                     if (!isRunning) {
                                         alert("Please start the timer before beginning the escape challenge");
                                     } else {
+                                        //Reset Stage 1
+                                        setUserAnswer("");
+                                        setFeedback("");
                                         setStage(1); //move to stage 1
                                     }
                                 }}
