@@ -119,8 +119,25 @@ export default function EscapeRoom() {
     const initialCode = `function escapeRoom() {
         let clue1 = "The door is locked...";
         let clue2 = "Try fixing the code...";
+
+        function helper() {
+            let hint = "These keys are important, you must find them";
+            console.log("Searching...");
+            return hint;
+        }
+
         // Broken line below - Fix to open the door!
+        console.log("Looking around...");
         console.log("FiNd ThE kEy?");
+        console.log("Where could it be");
+
+        let randomNumber = Math.floor(Math.random() * 10);
+        if(randomNumber > 5) {
+            console.log("Too high!");
+        } else {
+            console.log("Too Low!");
+        }
+        return clue1 + clue2 + helper();
     }`;
     const [userAnswer, setUserAnswer] = useState<string>(initialCode);
     const[feedback, setFeedback] = useState<string>("");
@@ -420,7 +437,7 @@ export default function EscapeRoom() {
                             {/* Editable Code Section*/}
                             <textarea
                                 value={userAnswer} onChange={(e) => setUserAnswer(e.target.value)} 
-                                style={{width:"100%",height:"200px",padding:"15px",margin:"15px 0",backgroundColor:isDark ? "#333" : "#f4f4f4",fontFamily:"monospace",fontSize:"1rem",color: isDark ? "#fff" : "#000",border:"1px solid gray",borderRadius:"8px",whiteSpace:"pre",lineHeight:"1.4"}}
+                                style={{width:"100%",height:"300px",padding:"15px",margin:"15px 0",backgroundColor:isDark ? "#1e1e1e" : "#fdfdfd",fontFamily:"monospace",fontSize:"1rem",color: isDark ? "#d4d4d4" : "#333",border:"1px solid gray",borderRadius:"8px",whiteSpace:"pre",lineHeight:"1.4"}}
                             />
                             <button onClick={checkAnswer} style={{...styles.timerButton, marginLeft: "10px"}}>Submit Answer</button>
                             {/* Feedback for user input*/}
