@@ -150,6 +150,17 @@ export default function EscapeRoom() {
         }
     };
 
+    //Stage 2 Functions
+    const [unlocked, setUnlocked] = useState(false);
+    const [lockReady, setLockReady] = useState(false);
+    useEffect(() => {
+        if (stage === 2) {
+            setUnlocked(false); //Reset lock
+            setLockReady(false); //Hide the lock
+            setTimeout(() => setLockReady(true), 100); //Show lock after short delay
+        }
+    }, [stage]);
+
     //Page Styling
     const styles = {
         page: {
@@ -331,6 +342,91 @@ export default function EscapeRoom() {
             zIndex: 2,
             position: "relative" as "relative",
         },
+        lockContainer: {
+            position: "relative",
+            width: "200px",
+            height: "200px",
+            margin: "40px auto",
+            cursor: "pointer",
+        },
+        lockBody: {
+            width: "130px",
+            height: "130px",
+            background: "#333",
+            borderRadius: "10px",
+            position: "absolute",
+            bottom: 0,
+            left: "40px",
+            boxShadow: "0 5px 10px rgba(0,0,0,0.3)",
+            overflow: "hidden",
+        },
+        lockShackle: (unlocked: boolean) => ({
+            width: "90px",
+            height: "140px",
+            border: "14px solid #333",
+            borderBottom: "none",
+            borderRadius: "60px 60px 0 0",
+            position: "absolute",
+            top: "-60px",
+            left: "50%",
+            transform: `translateX(-45%) ${unlocked ? "rotate(-30deg)" : "rotate(0deg)"}`,
+            transformOrigin: "bottom center",
+            transition: "transform 1s ease",
+            zIndex: 1,
+        }),
+        key: (unlocked: boolean) => ({
+            width: "100px",
+            height: "14px",
+            background: "gold",
+            position: "absolute",
+            top: "110px",
+            left: unlocked ? "50px" : "-150px",
+            borderRadius: "3px",
+            transition: "transform 1s ease, left 1s ease",
+            transform: unlocked ? "rotate(90deg)" : "rotate(0deg)",
+            boxShadow: "0 0 4px rgba(0,0,0,0.4)",
+            display: "block",
+        }),
+        keyHead: {
+            width: "35px",
+            height: "35px",
+            borderRadius: "50%",
+            background: "gold",
+            position: "absolute",
+            left: "-40px",   // attaches to blade
+            top: "-11px",
+            boxShadow: "inset -2px -2px 4px rgba(0,0,0,0.3)",
+        },
+        keyHole: {
+            width: "12px",
+            height: "12px",
+            borderRadius: "50%",
+            background: "#fff",
+            position: "absolute",
+            top: "11px",
+            left: "11px",
+            boxShadow: "inset 0 0 4px rgba(0,0,0,0.3)",
+        },
+        keyNotch1: {
+            width: "12px",
+            height: "8px",
+            background: "gold",
+            position: "absolute",
+            right: "25px",
+            top: "-8px",
+            borderRadius: "2px",
+            boxShadow: "inset 0 -2px 2px rgba(0,0,0,0.2)",
+        },
+        keyNotch2: {
+            width: "12px",
+            height: "8px",
+            background: "gold",
+            position: "absolute",
+            right: "10px",
+            top: "-8px",
+            borderRadius: "2px",
+            boxShadow: "inset 0 -2px 2px rgba(0,0,0,0.2)",
+        },
     };
 
     return(
@@ -456,23 +552,26 @@ export default function EscapeRoom() {
                     )}
 
                     {/* Stage 2*/}
-                    {stage === 2 && (
-                        <div style={{ position: "relative", width: "100%", height: "500px", overflow:"hidden", perspective: "1000px"}}>
-                            {/* Left Door*/}
-                            <motion.div initial={{ rotateY: 0 }} animate={{ rotateY: -100 }} transition={{ duration: 4, ease: "easeInOut" }}
-                            style={{position: "absolute", top: 0, left: 0, width: "50%", height: "100%", backgroundImage: "url('/jean-wimmerlin-xQSxTVvcYxQ-unsplash.jpg", backgroundSize: "200% 100%", backgroundPosition: "left center", transformOrigin: "left center", zIndex:10, boxShadow: "inset 0 0 10px rgba(0,0,0,0.6), 0 0 20px rgba(0,0,0,0.4)"}}
-                            ></motion.div>
-                            {/* Right Door*/}
-                            <motion.div initial={{ rotateY: 0}} animate={{ rotateY: 100}} transition={{ duration: 4, ease: "easeInOut"}}
-                            style={{position: "absolute", top: 0, right: 0, width: "50%", height: "100%", backgroundImage: "url('/jean-wimmerlin-xQSxTVvcYxQ-unsplash.jpg", backgroundSize: "200% 100%", backgroundPosition: "right center", transformOrigin: "right center", zIndex: 10, boxShadow: "inset 0 0 10px rgba(0,0,0,0.6), 0 0 20px rgba(0,0,0,0.4)"}}
-                            ></motion.div>
-
-                            {/* Stage 2 content after doors open*/}
-                            <div style={{position: "relative", zIndex: 1, textAlign: "center", paddingTop:"200px"}}>
-                                <h2>Stage 2: You found the key, that was the easy part..</h2>
-                                <p>The next puzzle will test you even more</p>
+                    {stage === 2 && lockReady && (
+                        <div style={{ textAlign: "center", paddingTop: "50px"}}>
+                            <h2>The next stage is waiting - Unlock the door</h2>
+                            <p>Click the key to unlock the lock and reveal the next challenge</p>
+                            <div style={styles.lockContainer as React.CSSProperties} onClick={() => {
+                                setUnlocked(true);
+                                setTimeout(() => setStage(3), 1200); //Allow some time for animation to finish before revealing the next stage
+                            }}
+                        >
+                            <div style={styles.lockBody as React.CSSProperties}></div>
+                            <div style={styles.lockShackle(unlocked) as React.CSSProperties}></div>
+                            <div style={styles.key(unlocked) as React.CSSProperties}>
+                                <div style={styles.keyHead as React.CSSProperties}>
+                                    <div style={styles.keyHole as React.CSSProperties}></div>
+                                </div>
+                                <div style={styles.keyNotch1 as React.CSSProperties}></div>
+                                <div style={styles.keyNotch2 as React.CSSProperties}></div>
                             </div>
-                        </div>
+                        </div>        
+                    </div> 
                     )}
                 </main>  
             </div>
