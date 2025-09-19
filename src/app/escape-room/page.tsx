@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import Breadcrumbs from '../components/breadcrumbs'
+import {motion} from "framer-motion";
 
 //Escape-Room Page
 export default function EscapeRoom() {
@@ -451,6 +452,26 @@ export default function EscapeRoom() {
                                     Proceed to next level
                                 </button>
                             )}
+                        </div>
+                    )}
+
+                    {/* Stage 2*/}
+                    {stage === 2 && (
+                        <div style={{ position: "relative", width: "100%", height: "500px", overflow:"hidden", perspective: "1000px"}}>
+                            {/* Left Door*/}
+                            <motion.div initial={{ rotateY: 0 }} animate={{ rotateY: -100 }} transition={{ duration: 4, ease: "easeInOut" }}
+                            style={{position: "absolute", top: 0, left: 0, width: "50%", height: "100%", backgroundImage: "url('/jean-wimmerlin-xQSxTVvcYxQ-unsplash.jpg", backgroundSize: "200% 100%", backgroundPosition: "left center", transformOrigin: "left center", zIndex:10, boxShadow: "inset 0 0 10px rgba(0,0,0,0.6), 0 0 20px rgba(0,0,0,0.4)"}}
+                            ></motion.div>
+                            {/* Right Door*/}
+                            <motion.div initial={{ rotateY: 0}} animate={{ rotateY: 100}} transition={{ duration: 4, ease: "easeInOut"}}
+                            style={{position: "absolute", top: 0, right: 0, width: "50%", height: "100%", backgroundImage: "url('/jean-wimmerlin-xQSxTVvcYxQ-unsplash.jpg", backgroundSize: "200% 100%", backgroundPosition: "right center", transformOrigin: "right center", zIndex: 10, boxShadow: "inset 0 0 10px rgba(0,0,0,0.6), 0 0 20px rgba(0,0,0,0.4)"}}
+                            ></motion.div>
+
+                            {/* Stage 2 content after doors open*/}
+                            <div style={{position: "relative", zIndex: 1, textAlign: "center", paddingTop:"200px"}}>
+                                <h2>Stage 2: You found the key, that was the easy part..</h2>
+                                <p>The next puzzle will test you even more</p>
+                            </div>
                         </div>
                     )}
                 </main>  
