@@ -485,15 +485,48 @@ export default function EscapeRoom() {
             marginBottom: "20px", 
             textAlign: "center" as "center",
         },
+        roomWrapper: {
+            position: "relative" as "relative",
+            width: "100%",
+            maxWidth: "1600px",
+            margin: "0 auto",
+            backgroundImage: "url('/gcp-visuals-hzdcs6glyyY-unsplash.jpg')", 
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center center",
+            overflow: "hidden",
+            aspectRatio: "16 / 9",
+            height: "120vh",
+        },
+        roomImage: {
+            width: "100%",
+            height: "100%",
+            objectFit: "cover" as const,
+            objectPosition: "center 80%",
+            display: "block",
+        },
         roomBackground: {
             position: "relative" as "relative", 
             width: "100%", 
             height: "100vh", 
-            backgroundImage: "url('/gcp-visuals-hzdcs6glyyY-unsplash.jpg')", 
-            backgroundSize: "cover", 
+            
+            backgroundSize: "contain", 
+            backgroundRepeat: "no-repeat",
             backgroundPosition: "center 70%",
         },
-        
+        stage3Hotspot: {
+            position: "absolute" as "absolute",
+            cursor: "pointer",
+            border: "2px solid transparent", //Invisible by default
+        },
+        overlay: {
+            position: "absolute" as "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+        },
+
     };
 
     return(
@@ -650,13 +683,45 @@ export default function EscapeRoom() {
                                 <p>Oh No! The door closed and locked behind you</p>
                                 <p>Theres something strange going on here...</p>
                                 <p>Look around and find clues by clicking on the objects to move forward to the next stage</p>
-                                <p>Tip: Not everything is clickable - only the right items will help you escape!</p>
+                                <p>Tip: Not everything is clickable - only the right items selected in the right order will help you escape!</p>
                             </div>
 
                             {/*Room Image Background*/}
-                        <div style={styles.roomBackground}>
-                            {/* Clickable objects*/}
-                        </div>
+                            <div style={styles.roomWrapper}>
+                                {/* Clickable objects*/}
+                                {/* Desk */}
+                                <svg viewBox= "0 0 100 100" style={styles.overlay}>
+                                    <polygon points="19,70 37,62 47,65 28,73" fill="rgba(0,0,255,0.3)" onClick={() => alert("You clicked the desk")}
+                                    style={{cursor: "pointer"}}/>
+                                
+                                    {/* Couch */}
+                                    <polygon points="50,90 74,81 85,89 65,98" fill="rgba(0,255,0,0.3)" onClick={() => alert("You clicked the couch")}
+                                        style={{cursor: "pointer"}}/>
+
+                                    {/* Pot Plant */}
+                                    <polygon points="13,82 20,81.5 18.5,87 14,87.5" fill="rgba(255,165,0,0.3)" onClick={() => alert("You clicked the plant pot")}
+                                    style={{cursor: "pointer"}}/>
+
+                                    {/* Wall Image */}
+                                    <polygon points="54,38 59,40 59,50 54,48" fill="rgba(255,0,0,0.3)" onClick={() => alert("You clicked the wall image")}
+                                    style={{cursor: "pointer"}}/>
+
+                                    {/* Book */}
+                                    <polygon points="71,72 72,72 72,76 71,76" fill="rgba(255,165,0,0.3)" onClick={() => alert("You clicked the secret book")}
+                                    style={{cursor: "pointer"}}/>
+
+                                    {/* Computer */}
+                                    <polygon points="27,61 33.5,58.5 34,63 27,66" fill="rgba(0,255,255,0.3)" onClick={() => alert("You clicked the computer")}
+                                    style={{cursor: "pointer"}}/>
+
+                                </svg>
+
+                                
+
+                                
+
+                                
+                            </div>
                         </div> 
                     )}
                 </main>  
