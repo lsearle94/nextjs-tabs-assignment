@@ -573,6 +573,25 @@ export default function EscapeRoom() {
                         </div>        
                     </div> 
                     )}
+
+                    {/* Stage 3*/}
+                    {stage === 3 && (
+                        <div style={{marginTop: "30px"}}>
+                            {/*Instructions for Stage 3*/}
+                            <div style={{padding: "20px", borderRadius: "8px", backgroundColor: isDark ? "rgba(30,30,30,0.85)" : "rgba(255,255,255,0.9)", boxShadow: isDark ? "0 4px 8px rgba(0,0,0,0.7)" : "0 4px 8px rgba(0,0,0,0.15)", marginBottom: "20px", textAlign: "center"}}>
+                                <h2>Stage 2: Search the room</h2>
+                                <p>Oh No! The door closed and locked behind you</p>
+                                <p>Theres something strange going on here...</p>
+                                <p>Look around and find clues by clicking on the objects to move forward to the next stage</p>
+                                <p>Tip: Not everything is clickable - only the right items will help you escape!</p>
+                            </div>
+
+                            {/*Room Image Background*/}
+                        <div style={{position: "relative", width: "100%", height: "100vh", backgroundImage: "url('/gcp-visuals-hzdcs6glyyY-unsplash.jpg')", backgroundSize: "cover", backgroundPosition: "center 70%",}}>
+                            {/* Clickable objects*/}
+                        </div>
+                        </div> 
+                    )}
                 </main>  
             </div>
 
