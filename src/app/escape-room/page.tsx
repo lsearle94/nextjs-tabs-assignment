@@ -301,6 +301,12 @@ export default function EscapeRoom() {
             marginRight: "10px",
             transition: "border-color 0.3s ease, box-shadow 0.3s ease",
         },
+        timer: {
+            margin: "20px 0", 
+            padding: "15px", 
+            border: "1px solid gray", 
+            borderRadius: "8px"
+        },
         timerDisplay: {
             marginTop: "15px",
             fontWeight: "bold",
@@ -312,6 +318,22 @@ export default function EscapeRoom() {
             color: isDark ? "#ff5555" : "#cc0000",
             boxShadow: isDark ? "0 0 10px rgba(255, 85, 85, 0.6)" : "0 0 10px rgba(204, 0, 0, 0.3)",
             transition: "all 0.2s ease",
+        },
+        startButton: {
+            marginTop: "15px", 
+            padding: "10px 20px", 
+            borderRadius: "6px", 
+            border: "none", 
+            backgroundColor: "#28a745", 
+            color: "#fff", 
+            fontWeight: "bold", 
+            cursor: "pointer"
+        },
+        stage1: {
+            marginTop: "30px", 
+            padding: "20px", 
+            border: "1px solid gray", 
+            borderRadius: "8px"
         },
         imageWrapper: {
             display: "flex",
@@ -341,6 +363,34 @@ export default function EscapeRoom() {
             lineHeight: "1.6",
             zIndex: 2,
             position: "relative" as "relative",
+        },
+        editableCode: {
+            width:"100%",
+            height:"300px",
+            padding:"15px",
+            margin:"15px 0",
+            backgroundColor:isDark ? "#1e1e1e" : "#fdfdfd",
+            fontFamily:"monospace",
+            fontSize:"1rem",
+            color: isDark ? "#d4d4d4" : "#333",
+            border:"1px solid gray",
+            borderRadius:"8px",
+            whiteSpace:"pre",
+            lineHeight:"1.4"
+        },
+        nextButton: {
+            marginTop: "15px", 
+            padding: "10px 20px", 
+            borderRadius: "6px", 
+            border: "none", 
+            backgroundColor: "#28a745", 
+            color: "#fff", 
+            fontWeight: "bold", 
+            cursor: "pointer"
+        },
+        feedback: {
+            marginTop: "10px", 
+            color: feedback === "Correct!" ? "green" : "red"
         },
         lockContainer: {
             position: "relative",
@@ -427,6 +477,23 @@ export default function EscapeRoom() {
             borderRadius: "2px",
             boxShadow: "inset 0 -2px 2px rgba(0,0,0,0.2)",
         },
+        stage3Instructions: {
+            padding: "20px", 
+            borderRadius: "8px", 
+            backgroundColor: isDark ? "rgba(30,30,30,0.85)" : "rgba(255,255,255,0.9)", 
+            boxShadow: isDark ? "0 4px 8px rgba(0,0,0,0.7)" : "0 4px 8px rgba(0,0,0,0.15)", 
+            marginBottom: "20px", 
+            textAlign: "center" as "center",
+        },
+        roomBackground: {
+            position: "relative" as "relative", 
+            width: "100%", 
+            height: "100vh", 
+            backgroundImage: "url('/gcp-visuals-hzdcs6glyyY-unsplash.jpg')", 
+            backgroundSize: "cover", 
+            backgroundPosition: "center 70%",
+        },
+        
     };
 
     return(
@@ -471,7 +538,7 @@ export default function EscapeRoom() {
                     <Breadcrumbs activeTab={activeTab} />
 
                     {/*Timer UI*/}
-                    <div style={{margin: "20px 0", padding: "15px", border: "1px solid gray", borderRadius: "8px"}}>
+                    <div style={styles.timer}>
                         <h3>Escape Room Timer</h3>
                         <input type="number" value={inputTime} onChange={(e) => setInputTime(e.target.value)} placeholder="Enter minutes" style={styles.timerInput}
                         onFocus={(e) => (e.currentTarget.style.boxShadow = "0 0 6px rgba(0, 123, 255, 0.7")}
@@ -518,7 +585,7 @@ export default function EscapeRoom() {
                                         setStage(1); //move to stage 1
                                     }
                                 }}
-                                style={{marginTop: "15px", padding: "10px 20px", borderRadius: "6px", border: "none", backgroundColor: "#28a745", color: "#fff", fontWeight: "bold", cursor: "pointer"}}
+                                style={styles.startButton}
                                 >Let's Escape!</button>
                             </div>
                             <div style={styles.imageBox}></div>
@@ -527,24 +594,24 @@ export default function EscapeRoom() {
 
                     {/* Stage 1*/}
                     {stage === 1 && (
-                        <div style={{marginTop: "30px", padding: "20px", border: "1px solid gray", borderRadius: "8px"}}>
+                        <div style={styles.stage1}>
                             <h2>Stage 1: Fix the code</h2>
                             <p>In order to begin this escape challenge, you must first unlock the door to enter.</p>
                             <p>The code you see here is corrupted! In order to escape this room, you must fix the phrase so it reads this exactly: <strong>Find the Key!</strong></p>
                             {/* Editable Code Section*/}
                             <textarea
                                 value={userAnswer} onChange={(e) => setUserAnswer(e.target.value)} 
-                                style={{width:"100%",height:"300px",padding:"15px",margin:"15px 0",backgroundColor:isDark ? "#1e1e1e" : "#fdfdfd",fontFamily:"monospace",fontSize:"1rem",color: isDark ? "#d4d4d4" : "#333",border:"1px solid gray",borderRadius:"8px",whiteSpace:"pre",lineHeight:"1.4"}}
+                                style={styles.editableCode}
                             />
                             <button onClick={checkAnswer} style={{...styles.timerButton, marginLeft: "10px"}}>Submit Answer</button>
                             {/* Feedback for user input*/}
                             {feedback && (
-                                <p style={{marginTop: "10px", color: feedback === "Correct!" ? "green" : "red"}}>{feedback}</p>
+                                <p style={styles.feedback}>{feedback}</p>
                             )}
                             {/* Next button*/}
                             {feedback === "Correct!" && (
                                 <button onClick={() => setStage(2)}
-                                style={{marginTop: "15px", padding: "10px 20px", borderRadius: "6px", border: "none", backgroundColor: "#28a745", color: "#fff", fontWeight: "bold", cursor: "pointer"}}>
+                                style={styles.nextButton}>
                                     Proceed to next level
                                 </button>
                             )}
@@ -578,7 +645,7 @@ export default function EscapeRoom() {
                     {stage === 3 && (
                         <div style={{marginTop: "30px"}}>
                             {/*Instructions for Stage 3*/}
-                            <div style={{padding: "20px", borderRadius: "8px", backgroundColor: isDark ? "rgba(30,30,30,0.85)" : "rgba(255,255,255,0.9)", boxShadow: isDark ? "0 4px 8px rgba(0,0,0,0.7)" : "0 4px 8px rgba(0,0,0,0.15)", marginBottom: "20px", textAlign: "center"}}>
+                            <div style={styles.stage3Instructions}>
                                 <h2>Stage 2: Search the room</h2>
                                 <p>Oh No! The door closed and locked behind you</p>
                                 <p>Theres something strange going on here...</p>
@@ -587,7 +654,7 @@ export default function EscapeRoom() {
                             </div>
 
                             {/*Room Image Background*/}
-                        <div style={{position: "relative", width: "100%", height: "100vh", backgroundImage: "url('/gcp-visuals-hzdcs6glyyY-unsplash.jpg')", backgroundSize: "cover", backgroundPosition: "center 70%",}}>
+                        <div style={styles.roomBackground}>
                             {/* Clickable objects*/}
                         </div>
                         </div> 
