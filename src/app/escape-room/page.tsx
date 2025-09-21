@@ -173,7 +173,10 @@ export default function EscapeRoom() {
     const [computerPasswordInput, setComputerPasswordInput] = useState("");
     const [showSafePopup, setShowSafePopup] = useState(false);
     const [safeCodeInput, setSafeCodeInput] = useState("");
-
+    //Computer mini-game states
+    const [showMiniGame1, setShowMiniGame1] = useState(false);
+    const [miniGame1Code, setMiniGame1Ciode] = useState("");
+    const [miniGame1Feedback, setMiniGame1Feedback] = useState("");
 
 
     //Page Styling
@@ -730,7 +733,8 @@ export default function EscapeRoom() {
                                 {/* Clickable objects*/}
                                 {/* Desk */}
                                 <svg viewBox= "0 0 100 100" style={styles.overlay}>
-                                    <polygon points="19,70 37,62 47,65 28,73" fill="rgba(0,0,255,0.3)" onClick={() => alert("You notice some scribbles on the desk: (TBC)")}
+                                    <polygon points="19,70 37,62 47,65 28,73" fill="rgba(0,0,255,0.3)" 
+                                    onClick={() => alert("You notice some scribbles on the desk:\n\n'To unlock the secrets, you'll need to count them all\nstart from nothing and stop at a thousand\nA repeating loop might help you on your way...'")}
                                     style={{cursor: "pointer"}}/>
                                 
                                     {/* Couch */}
@@ -806,6 +810,35 @@ export default function EscapeRoom() {
                                         }}>Submit</button>
                                         <button onClick={() => setShowComputerPopup(false)} style={{marginLeft: "10px"}}>Cancel</button>
                                     </div>
+                                </div>
+                            )}
+                            {/* Minigame 1*/}
+                            {computerUnlocked && (
+                                <div>
+                                    {!miniGame1Complete && (
+                                        <div>
+                                            <h3>Minigame 1: Generate Numbers 0-1000</h3>
+                                            <p>Write code that generates all numbers from 0 to 1000.</p>
+                                            <textarea value={miniGame1Code} onChange={(e) => setMiniGame1Ciode(e.target.value)}
+                                            style={{width: "100%", height: "120px", marginBottom: "10px"}}
+                                            />
+                                            <button onClick={() => {
+                                                if (miniGame1Code.includes("for") && miniGame1Code.includes("1000")) {
+                                                    setMiniGame1Complete(true);
+                                                    setMiniGame1Feedback("Correct! You found the first half of the safe code: 2745");
+                                                } else {
+                                                    setMiniGame1Feedback("Not quite right, try again");
+                                                }
+                                            }}>Submit</button>
+                                            {miniGame1Feedback && <p>{miniGame1Feedback}</p>}
+                                        </div>
+                                        )}
+                                        {miniGame1Complete && (
+                                            <div>
+                                                <p>You solved Minigame 1. The first half of the code is: <strong>2745</strong></p>
+                                                <button onClick={() => setShowComputerPopup(false)}>Close</button>
+                                            </div>
+                                        )}
                                 </div>
                             )}
                             {/* Popup for safe code */}
