@@ -175,6 +175,7 @@ export default function EscapeRoom() {
     const [safeCodeInput, setSafeCodeInput] = useState("");
 
 
+
     //Page Styling
     const styles = {
         page: {
@@ -742,7 +743,7 @@ export default function EscapeRoom() {
                                             alert("Thats odd, there was a note inside this pot plant with a password: P@s5wOrD!");
                                             setPlantPasswordFound(true);
                                         } else { 
-                                            alert("Looks to be just a normal plant, nothing further to find here.");
+                                            alert("Looks to be just a normal plant, nothing further to find here. We already have the password: P@s5wOrD!");
                                         }
                                     }}
                                     style={{cursor: "pointer"}}/>
