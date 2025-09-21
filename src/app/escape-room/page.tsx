@@ -161,6 +161,20 @@ export default function EscapeRoom() {
         }
     }, [stage]);
 
+    //Stage 3 tracking for clickable objects
+    const [plantPasswordFound, setPlantPasswordFound] = useState(false);
+    const [computerUnlocked, setComputerUnlocked] = useState(false);
+    const [miniGame1Complete, setMiniGame1Complete] = useState(false);
+    const [miniGame2Complete, setMiniGame2Complete] = useState(false);
+    const [safeOpened, setSafeOpened] = useState(false);
+    const [escapeKeyFound, setEscapeKeyFound] = useState(false);
+    //Stage 3 popup screens
+    const [showComputerPopup, setShowComputerPopup] = useState(false);
+    const [computerPasswordInput, setComputerPasswordInput] = useState("");
+    const [showSafePopup, setShowSafePopup] = useState(false);
+    const [safeCodeInput, setSafeCodeInput] = useState("");
+
+
     //Page Styling
     const styles = {
         page: {
@@ -526,6 +540,30 @@ export default function EscapeRoom() {
             width: "100%",
             height: "100%",
         },
+        computerPopup: {
+            position: "fixed" as "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: "rgba(0,0,0,0.7)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 1000,
+        },
+        safePopup: {
+            position: "fixed" as "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: "rgba(0,0,0,0.7)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 1000,
+        },
 
     };
 
@@ -691,37 +729,108 @@ export default function EscapeRoom() {
                                 {/* Clickable objects*/}
                                 {/* Desk */}
                                 <svg viewBox= "0 0 100 100" style={styles.overlay}>
-                                    <polygon points="19,70 37,62 47,65 28,73" fill="rgba(0,0,255,0.3)" onClick={() => alert("You clicked the desk")}
+                                    <polygon points="19,70 37,62 47,65 28,73" fill="rgba(0,0,255,0.3)" onClick={() => alert("You notice some scribbles on the desk: (TBC)")}
                                     style={{cursor: "pointer"}}/>
                                 
                                     {/* Couch */}
-                                    <polygon points="50,90 74,81 85,89 65,98" fill="rgba(0,255,0,0.3)" onClick={() => alert("You clicked the couch")}
+                                    <polygon points="50,90 74,81 85,89 65,98" fill="rgba(0,255,0,0.3)" onClick={() => alert("Hidden under the couch cushion: a note that say's 'TBC'")}
                                         style={{cursor: "pointer"}}/>
 
                                     {/* Pot Plant */}
-                                    <polygon points="13,82 20,81.5 18.5,87 14,87.5" fill="rgba(255,165,0,0.3)" onClick={() => alert("You clicked the plant pot")}
+                                    <polygon points="13,82 20,81.5 18.5,87 14,87.5" fill="rgba(255,165,0,0.3)" onClick={() => {
+                                        if (!plantPasswordFound) {
+                                            alert("Thats odd, there was a note inside this pot plant with a password: P@s5wOrD!");
+                                            setPlantPasswordFound(true);
+                                        } else { 
+                                            alert("Looks to be just a normal plant, nothing further to find here.");
+                                        }
+                                    }}
                                     style={{cursor: "pointer"}}/>
 
                                     {/* Wall Image */}
-                                    <polygon points="54,38 59,40 59,50 54,48" fill="rgba(255,0,0,0.3)" onClick={() => alert("You clicked the wall image")}
+                                    <polygon points="54,38 59,40 59,50 54,48" fill="rgba(255,0,0,0.3)" onClick={() => {
+                                        if (!miniGame1Complete || !miniGame2Complete) {
+                                            alert("There's a hidden safe behind this picture! Now to find the code to open it...");
+                                        } else if (!safeOpened) {
+                                            alert("Let's try the code we found on the computer... ")
+                                            setShowSafePopup(true);
+                                        } else {
+                                            alert("We've already opened the safe and found a key.");
+                                        }
+                                    }}
                                     style={{cursor: "pointer"}}/>
 
                                     {/* Book */}
-                                    <polygon points="71,72 72,72 72,76 71,76" fill="rgba(255,165,0,0.3)" onClick={() => alert("You clicked the secret book")}
+                                    <polygon points="71,72 72,72 72,76 71,76" fill="rgba(255,165,0,0.3)" onClick={() => {
+                                        if (!escapeKeyFound) {
+                                            alert("There looks to be some sort of strange key hole on the spine of this book. Could there be a key hidden somewhere?")
+                                        } else {
+                                            alert("The key fits, you escaped!")
+                                            //Followed by success screen
+                                        }
+                                    }}
                                     style={{cursor: "pointer"}}/>
 
                                     {/* Computer */}
-                                    <polygon points="27,61 33.5,58.5 34,63 27,66" fill="rgba(0,255,255,0.3)" onClick={() => alert("You clicked the computer")}
+                                    <polygon points="27,61 33.5,58.5 34,63 27,66" fill="rgba(0,255,255,0.3)" onClick={() => {
+                                        if (!plantPasswordFound) {
+                                            alert("Hmm, it's locked. I wonder if there is a password around here somewhere...");
+                                        } else {
+                                            alert("Let's use the password from the plant...")
+                                            setShowComputerPopup(true);
+                                        }
+                                    }}
                                     style={{cursor: "pointer"}}/>
 
-                                </svg>
-
-                                
-
-                                
-
-                                
+                                </svg> 
                             </div>
+                            {/* Popup for computer password */}
+                            {showComputerPopup && (
+                                <div style={styles.computerPopup}>
+                                    <div style={{background: "#fff", padding: "20px", borderRadius: "8px", width: "300px"}}>
+                                        <h3>Computer Login</h3>
+                                        <p>Enter password to unlock: </p>
+                                        <input type="password" value={computerPasswordInput} 
+                                        onChange={(e) => setComputerPasswordInput(e.target.value)}
+                                        style={{width: "100%", padding: "8px", marginBottom: "10px"}}>
+                                        </input>
+                                        <button onClick={() => {
+                                            if (computerPasswordInput === "P@s5wOrD!") {
+                                                alert("Access granted. The computer is unlocked.");
+                                                setComputerUnlocked(true);
+                                                setShowComputerPopup(false);
+                                            } else {
+                                                alert("Incorrect password, try again");
+                                            }
+                                        }}>Submit</button>
+                                        <button onClick={() => setShowComputerPopup(false)} style={{marginLeft: "10px"}}>Cancel</button>
+                                    </div>
+                                </div>
+                            )}
+                            {/* Popup for safe code */}
+                            {showSafePopup && (
+                                <div style={styles.safePopup}>
+                                    <div style={{background: "#fff", padding: "20px", borderRadius: "8px", width: "300px"}}>
+                                        <h3>Safe Lock</h3>
+                                        <p>Enter the code to unlock the safe: </p>
+                                        <input type="text" value={safeCodeInput}
+                                        onChange={(e) => setSafeCodeInput(e.target.value)}
+                                        style={{width: "100%", padding: "8px", marginBottom: "10px"}}>
+                                        </input>
+                                        <button onClick={() => {
+                                            if (safeCodeInput === "2745-ASDF") {
+                                                alert("The safe opened! There's a key inside.");
+                                                setSafeOpened(true);
+                                                setEscapeKeyFound(true);
+                                                setShowSafePopup(false);
+                                            } else {
+                                                alert("Incorrect code.");
+                                            }
+                                        }}>Unlock</button>
+                                        <button onClick={() => setShowSafePopup(false)} style={{marginLeft: "10px"}}>Cancel</button>
+                                    </div>
+                                </div>
+                            )}
                         </div> 
                     )}
                 </main>  
