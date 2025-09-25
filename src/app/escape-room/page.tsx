@@ -61,7 +61,7 @@ export default function EscapeRoom() {
             //Reset Stage 1 
             setUserAnswer(initialCode);
             setFeedback("");
-            alert("Time is up! You did not escape.");
+            setDialogue("Time is up! You did not escape.");
             return;
         }
     const timer = setInterval(() => {
@@ -82,7 +82,7 @@ export default function EscapeRoom() {
         const minutes = parseInt(inputTime, 10);
         const seconds = minutes * 60;
         if (isNaN(minutes) || minutes <= 0) {
-            alert("Please enter valid number of minutes");
+            setDialogue("Please enter valid number of minutes");
             return;
         }
         setTimeLeft(seconds);
@@ -110,7 +110,7 @@ export default function EscapeRoom() {
         //Reset the Stage 1 data
         setUserAnswer(initialCode);
         setFeedback("");
-        alert("You stopped the game, you did not escape!");
+        setDialogue("You stopped the game, you did not escape!");
     };
 
     //Game Play State
@@ -177,6 +177,8 @@ export default function EscapeRoom() {
     const [showMiniGame1, setShowMiniGame1] = useState(false);
     const [miniGame1Code, setMiniGame1Ciode] = useState("");
     const [miniGame1Feedback, setMiniGame1Feedback] = useState("");
+
+    const [dialogue, setDialogue] = useState<string | null>(null);
 
 
     //Page Styling
@@ -568,6 +570,28 @@ export default function EscapeRoom() {
             alignItems: "center",
             zIndex: 1000,
         },
+        dialoguePopup: {
+            position: "fixed" as "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: "rgba(0,0,0,0.6)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 2000,
+        },
+        dialogueBox: {
+            background: isDark ? "#222" : "#fff",
+            padding: "20px",
+            borderRadius: "10px",
+            width: "400px",
+            maxWidth: "90%",
+            color: isDark ? "#fff" : "#000",
+            boxShadow: "0 6px 12px rgba(0,0,0,0.4)",
+            testAlign: "center" as const,
+        },
 
     };
 
@@ -652,7 +676,7 @@ export default function EscapeRoom() {
                                 {/* Escape Button*/}
                                 <button onClick={() => {
                                     if (!isRunning) {
-                                        alert("Please start the timer before beginning the escape challenge");
+                                        setDialogue("Please start the timer before beginning the escape challenge");
                                     } else {
                                         //Reset Stage 1
                                         setUserAnswer(initialCode);
@@ -734,20 +758,20 @@ export default function EscapeRoom() {
                                 {/* Desk */}
                                 <svg viewBox= "0 0 100 100" style={styles.overlay}>
                                     <polygon points="19,70 37,62 47,65 28,73" fill="rgba(0,0,255,0.3)" 
-                                    onClick={() => alert("You notice some scribbles on the desk:\n\n'To unlock the secrets, you'll need to count them all\nstart from nothing and stop at a thousand\nA repeating loop might help you on your way...'")}
+                                    onClick={() => setDialogue("You notice some scribbles on the desk:\n\n'To unlock the secrets, you'll need to count them all\nstart from nothing and stop at a thousand\nA repeating loop might help you on your way...'")}
                                     style={{cursor: "pointer"}}/>
                                 
                                     {/* Couch */}
-                                    <polygon points="50,90 74,81 85,89 65,98" fill="rgba(0,255,0,0.3)" onClick={() => alert("Hidden under the couch cushion: a note that say's 'TBC'")}
+                                    <polygon points="50,90 74,81 85,89 65,98" fill="rgba(0,255,0,0.3)" onClick={() => setDialogue("Hidden under the couch cushion: a note that say's 'TBC'")}
                                         style={{cursor: "pointer"}}/>
 
                                     {/* Pot Plant */}
                                     <polygon points="13,82 20,81.5 18.5,87 14,87.5" fill="rgba(255,165,0,0.3)" onClick={() => {
                                         if (!plantPasswordFound) {
-                                            alert("Thats odd, there was a note inside this pot plant with a password: P@s5wOrD!");
+                                            setDialogue("Thats odd, there was a note inside this pot plant with a password: P@s5wOrD!");
                                             setPlantPasswordFound(true);
                                         } else { 
-                                            alert("Looks to be just a normal plant, nothing further to find here. We already have the password: P@s5wOrD!");
+                                            setDialogue("Looks to be just a normal plant, nothing further to find here. We already have the password: P@s5wOrD!");
                                         }
                                     }}
                                     style={{cursor: "pointer"}}/>
@@ -755,12 +779,12 @@ export default function EscapeRoom() {
                                     {/* Wall Image */}
                                     <polygon points="54,38 59,40 59,50 54,48" fill="rgba(255,0,0,0.3)" onClick={() => {
                                         if (!miniGame1Complete || !miniGame2Complete) {
-                                            alert("There's a hidden safe behind this picture! Now to find the code to open it...");
+                                            setDialogue("There's a hidden safe behind this picture! Now to find the code to open it...");
                                         } else if (!safeOpened) {
-                                            alert("Let's try the code we found on the computer... ")
+                                            setDialogue("Let's try the code we found on the computer... ")
                                             setShowSafePopup(true);
                                         } else {
-                                            alert("We've already opened the safe and found a key.");
+                                            setDialogue("We've already opened the safe and found a key.");
                                         }
                                     }}
                                     style={{cursor: "pointer"}}/>
@@ -768,9 +792,9 @@ export default function EscapeRoom() {
                                     {/* Book */}
                                     <polygon points="71,72 72,72 72,76 71,76" fill="rgba(255,165,0,0.3)" onClick={() => {
                                         if (!escapeKeyFound) {
-                                            alert("There looks to be some sort of strange key hole on the spine of this book. Could there be a key hidden somewhere?")
+                                            setDialogue("There looks to be some sort of strange key hole on the spine of this book. Could there be a key hidden somewhere?")
                                         } else {
-                                            alert("The key fits, you escaped!")
+                                            setDialogue("The key fits, you escaped!")
                                             //Followed by success screen
                                         }
                                     }}
@@ -779,9 +803,9 @@ export default function EscapeRoom() {
                                     {/* Computer */}
                                     <polygon points="27,61 33.5,58.5 34,63 27,66" fill="rgba(0,255,255,0.3)" onClick={() => {
                                         if (!plantPasswordFound) {
-                                            alert("Hmm, it's locked. I wonder if there is a password around here somewhere...");
+                                            setDialogue("Hmm, it's locked. I wonder if there is a password around here somewhere...");
                                         } else {
-                                            alert("Let's use the password from the plant...")
+                                            setDialogue("Let's use the password from the plant...")
                                             setShowComputerPopup(true);
                                         }
                                     }}
@@ -801,11 +825,11 @@ export default function EscapeRoom() {
                                         </input>
                                         <button onClick={() => {
                                             if (computerPasswordInput === "P@s5wOrD!") {
-                                                alert("Access granted. The computer is unlocked.");
+                                                setDialogue("Access granted. The computer is unlocked.");
                                                 setComputerUnlocked(true);
                                                 setShowComputerPopup(false);
                                             } else {
-                                                alert("Incorrect password, try again");
+                                                setDialogue("Incorrect password, try again");
                                             }
                                         }}>Submit</button>
                                         <button onClick={() => setShowComputerPopup(false)} style={{marginLeft: "10px"}}>Cancel</button>
@@ -853,12 +877,12 @@ export default function EscapeRoom() {
                                         </input>
                                         <button onClick={() => {
                                             if (safeCodeInput === "2745-ASDF") {
-                                                alert("The safe opened! There's a key inside.");
+                                                setDialogue("The safe opened! There's a key inside.");
                                                 setSafeOpened(true);
                                                 setEscapeKeyFound(true);
                                                 setShowSafePopup(false);
                                             } else {
-                                                alert("Incorrect code.");
+                                                setDialogue("Incorrect code.");
                                             }
                                         }}>Unlock</button>
                                         <button onClick={() => setShowSafePopup(false)} style={{marginLeft: "10px"}}>Cancel</button>
@@ -866,6 +890,19 @@ export default function EscapeRoom() {
                                 </div>
                             )}
                         </div> 
+                    )}
+                    {/* Dialogue Boxes*/}
+                    {dialogue && (
+                        <div style={styles.dialoguePopup}>
+                            <div style={styles.dialogueBox}>
+                                {dialogue.split("\n").map((line, i) => (
+                                    <p key={i}>{line}</p>
+                                ))}
+                                <button style={{marginTop: "15px", padding: "8px 16px", border: "none", borderRadius: "6px", background: "#28a745", color: "fff", cursor: "pointer",}}
+                                    onClick={() => setDialogue(null)}
+                                >Close</button>
+                            </div>
+                        </div>
                     )}
                 </main>  
             </div>
