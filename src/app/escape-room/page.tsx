@@ -177,8 +177,10 @@ export default function EscapeRoom() {
     const [showMiniGame1, setShowMiniGame1] = useState(false);
     const [miniGame1Code, setMiniGame1Ciode] = useState("");
     const [miniGame1Feedback, setMiniGame1Feedback] = useState("");
+    const [showMiniGame, setShowMiniGame] = useState(false);
 
     const [dialogue, setDialogue] = useState<string | null>(null);
+    
 
 
     //Page Styling
@@ -592,6 +594,55 @@ export default function EscapeRoom() {
             boxShadow: "0 6px 12px rgba(0,0,0,0.4)",
             testAlign: "center" as const,
         },
+        miniGamePopup: {
+            position: "fixed" as "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: "rgba(0,0,0,0.7)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 2000,
+        },
+        miniGameBox: {
+            background: isDark ? "#222" : "#fff",
+            padding: "20px",
+            borderRadius: "10px",
+            width: "600px",
+            maxWidth: "90%",
+            color: isDark ? "#fff" : "#000",
+            boxShadow: "0 6px 12px rgba(0,0,0,0.4)",
+            textAlign: "center" as const,
+        },
+        miniGameButton: {
+            marginTop: "10px",
+            marginRight: "10px",
+            padding: "10px 20px",
+            border: "none",
+            borderRadius: "6px",
+            cursor: "pointer",
+            fontSize: "1rem",
+            fontWeight: "bold",
+            backgroundColor: "#007bff",
+            color: "#fff",
+            transition: "background-color 0.3s ease",
+        },
+        miniGameButtonHover: {
+            backgroundColor: "#0056b3",
+        },
+        miniGameCloseButton: {
+            marginTop: "10px",
+            marginLeft: "10px",
+            padding: "10px 20px",
+            border: "none",
+            borderRadius: "6px",
+            backgroundColor: "red",
+            color: "#fff",
+            fontWeight: "bold",
+            cursor: "pointer",
+        },
 
     };
 
@@ -828,6 +879,7 @@ export default function EscapeRoom() {
                                                 setDialogue("Access granted. The computer is unlocked.");
                                                 setComputerUnlocked(true);
                                                 setShowComputerPopup(false);
+                                                setShowMiniGame(true);
                                             } else {
                                                 setDialogue("Incorrect password, try again");
                                             }
@@ -837,25 +889,31 @@ export default function EscapeRoom() {
                                 </div>
                             )}
                             {/* Minigame 1*/}
-                            {computerUnlocked && (
-                                <div>
-                                    {!miniGame1Complete && (
-                                        <div>
-                                            <h3>Minigame 1: Generate Numbers 0-1000</h3>
-                                            <p>Write code that generates all numbers from 0 to 1000.</p>
-                                            <textarea value={miniGame1Code} onChange={(e) => setMiniGame1Ciode(e.target.value)}
-                                            style={{width: "100%", height: "120px", marginBottom: "10px"}}
-                                            />
-                                            <button onClick={() => {
-                                                if (miniGame1Code.includes("for") && miniGame1Code.includes("1000")) {
-                                                    setMiniGame1Complete(true);
-                                                    setMiniGame1Feedback("Correct! You found the first half of the safe code: 2745");
-                                                } else {
-                                                    setMiniGame1Feedback("Not quite right, try again");
-                                                }
-                                            }}>Submit</button>
-                                            {miniGame1Feedback && <p>{miniGame1Feedback}</p>}
-                                        </div>
+                            {computerUnlocked && showMiniGame && (
+                                <div style={styles.miniGamePopup} onClick={(e) => {
+                                    if (e.target === e.currentTarget) setShowMiniGame(false); }}> 
+                                    <div style={styles.miniGameBox}>
+                                        {!miniGame1Complete && (
+                                            <div>
+                                                <h3>Minigame 1: Generate Numbers 0-1000</h3>
+                                                <p>Write code that generates all numbers from 0 to 1000.</p>
+                                                <textarea value={miniGame1Code} onChange={(e) => setMiniGame1Ciode(e.target.value)}
+                                                style={{width: "100%", height: "120px", marginBottom: "10px"}}
+                                                />
+                                                <button style={styles.miniGameButton}
+                                                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = styles.miniGameButtonHover.backgroundColor)}
+                                                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = styles.miniGameButton.backgroundColor)}
+                                                onClick={() => {
+                                                    if (miniGame1Code.includes("for") && miniGame1Code.includes("1000")) {
+                                                        setMiniGame1Complete(true);
+                                                        setMiniGame1Feedback("Correct! You found the first half of the safe code: 2745");
+                                                    } else {
+                                                        setMiniGame1Feedback("Not quite right, try again");
+                                                    }
+                                                }}>Submit</button>
+                                                {miniGame1Feedback && <p>{miniGame1Feedback}</p>}
+                                                <button onClick={() => setShowMiniGame(false)} style={styles.miniGameCloseButton}>Close</button>
+                                            </div>
                                         )}
                                         {miniGame1Complete && (
                                             <div>
@@ -863,6 +921,7 @@ export default function EscapeRoom() {
                                                 <button onClick={() => setShowComputerPopup(false)}>Close</button>
                                             </div>
                                         )}
+                                    </div>
                                 </div>
                             )}
                             {/* Popup for safe code */}
@@ -898,7 +957,7 @@ export default function EscapeRoom() {
                                 {dialogue.split("\n").map((line, i) => (
                                     <p key={i}>{line}</p>
                                 ))}
-                                <button style={{marginTop: "15px", padding: "8px 16px", border: "none", borderRadius: "6px", background: "#28a745", color: "fff", cursor: "pointer",}}
+                                <button style={{marginTop: "15px", padding: "8px 16px", border: "none", borderRadius: "6px", background: "#28a745", color: "#fff", cursor: "pointer",}}
                                     onClick={() => setDialogue(null)}
                                 >Close</button>
                             </div>
