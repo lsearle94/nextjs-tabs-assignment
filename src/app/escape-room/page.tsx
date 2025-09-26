@@ -175,9 +175,16 @@ export default function EscapeRoom() {
     const [safeCodeInput, setSafeCodeInput] = useState("");
     //Computer mini-game states
     const [showMiniGame1, setShowMiniGame1] = useState(false);
-    const [miniGame1Code, setMiniGame1Ciode] = useState("");
+    const [miniGame1Code, setMiniGame1Code] = useState("");
     const [miniGame1Feedback, setMiniGame1Feedback] = useState("");
     const [showMiniGame, setShowMiniGame] = useState(false);
+    const [miniGame2Code, setMiniGame2Code] = useState(`
+        // TO DO: Revers the string
+        let text = "SAFE PASSWORD";
+        let reversed = text; 
+        // console.log(reversed)
+        // `);
+    const [miniGame2Feedback, setMiniGame2Feedback] = useState("");
 
     const [dialogue, setDialogue] = useState<string | null>(null);
     
@@ -813,7 +820,8 @@ export default function EscapeRoom() {
                                     style={{cursor: "pointer"}}/>
                                 
                                     {/* Couch */}
-                                    <polygon points="50,90 74,81 85,89 65,98" fill="rgba(0,255,0,0.3)" onClick={() => setDialogue("Hidden under the couch cushion: a note that say's 'TBC'")}
+                                    <polygon points="50,90 74,81 85,89 65,98" fill="rgba(0,255,0,0.3)" onClick={() => 
+                                    setDialogue("Hidden under the couch cushion: a note that say's: \n'What is forward is not the key,\nonly when reversed will you see...'")}
                                         style={{cursor: "pointer"}}/>
 
                                     {/* Pot Plant */}
@@ -897,7 +905,7 @@ export default function EscapeRoom() {
                                             <div>
                                                 <h3>Minigame 1: Generate Numbers 0-1000</h3>
                                                 <p>Write code that generates all numbers from 0 to 1000.</p>
-                                                <textarea value={miniGame1Code} onChange={(e) => setMiniGame1Ciode(e.target.value)}
+                                                <textarea value={miniGame1Code} onChange={(e) => setMiniGame1Code(e.target.value)}
                                                 style={{width: "100%", height: "120px", marginBottom: "10px"}}
                                                 />
                                                 <button style={styles.miniGameButton}
@@ -915,10 +923,37 @@ export default function EscapeRoom() {
                                                 <button onClick={() => setShowMiniGame(false)} style={styles.miniGameCloseButton}>Close</button>
                                             </div>
                                         )}
-                                        {miniGame1Complete && (
+                                        {/* Mini Game 2 */}
+                                        {miniGame1Complete && !miniGame2Complete && (
                                             <div>
-                                                <p>You solved Minigame 1. The first half of the code is: <strong>2745</strong></p>
-                                                <button onClick={() => setShowComputerPopup(false)}>Close</button>
+                                                <h3>Minigame 2: Reverse the string</h3>
+                                                <p>Update the below code so that the string <strong>"SAFE PASSWORD"</strong> appears in reverse.</p>
+                                                <textarea value={miniGame2Code} onChange={(e) => setMiniGame2Code(e.target.value)} style={{width: "100%", height: "120px", marginBottom: "10px"}}>
+                                                </textarea>
+                                                <button style={styles.miniGameButton} 
+                                                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = styles.miniGameButtonHover.backgroundColor)}
+                                                onMouseLeave ={(e) => (e.currentTarget.style.backgroundColor = styles.miniGameButton.backgroundColor)}
+                                                onClick={() => {
+                                                    if (
+                                                        miniGame2Code.includes("split") &&
+                                                        miniGame2Code.includes("reverse") &&
+                                                        miniGame2Code.includes("join")
+                                                    ) {
+                                                        setMiniGame2Complete(true);
+                                                        setMiniGame2Feedback("Correct! The second half of the safe code is: ASDF");
+                                                    } else {
+                                                        setMiniGame2Feedback("Not quite right, try again");
+                                                    }
+                                                }}>Submit</button>
+                                                {miniGame2Feedback && <p>{miniGame2Feedback}</p>}
+                                                <button onClick={() => setShowMiniGame(false)} style={styles.miniGameCloseButton}>Close</button>
+                                            </div>
+                                        )}
+                                        {miniGame1Complete && miniGame2Complete && (
+                                            <div>
+                                                <p>You solved both mini games!</p>
+                                                <p>The full code fior the safe is: <strong>2745-ASDF</strong></p>
+                                                <button style={styles.miniGameButton} onClick={() => setShowMiniGame(false)}>Close</button>
                                             </div>
                                         )}
                                     </div>
