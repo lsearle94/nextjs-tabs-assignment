@@ -179,7 +179,7 @@ export default function EscapeRoom() {
     const [miniGame1Feedback, setMiniGame1Feedback] = useState("");
     const [showMiniGame, setShowMiniGame] = useState(false);
     const [miniGame2Code, setMiniGame2Code] = useState(`
-        // TO DO: Revers the string
+        // TO DO: Reverse the string
         let text = "SAFE PASSWORD";
         let reversed = text; 
         // console.log(reversed)
@@ -882,7 +882,10 @@ export default function EscapeRoom() {
                                         onChange={(e) => setComputerPasswordInput(e.target.value)}
                                         style={{width: "100%", padding: "8px", marginBottom: "10px"}}>
                                         </input>
-                                        <button onClick={() => {
+                                        <button style={styles.miniGameButton} 
+                                        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = styles.miniGameButtonHover.backgroundColor )} 
+                                        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = styles.miniGameButton.backgroundColor )} 
+                                        onClick={() => {
                                             if (computerPasswordInput === "P@s5wOrD!") {
                                                 setDialogue("Access granted. The computer is unlocked.");
                                                 setComputerUnlocked(true);
@@ -892,7 +895,7 @@ export default function EscapeRoom() {
                                                 setDialogue("Incorrect password, try again");
                                             }
                                         }}>Submit</button>
-                                        <button onClick={() => setShowComputerPopup(false)} style={{marginLeft: "10px"}}>Cancel</button>
+                                        <button onClick={() => setShowComputerPopup(false)} style={styles.miniGameCloseButton}>Cancel</button>
                                     </div>
                                 </div>
                             )}
