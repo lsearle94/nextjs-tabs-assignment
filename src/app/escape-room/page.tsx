@@ -186,6 +186,7 @@ export default function EscapeRoom() {
     const [miniGame2Feedback, setMiniGame2Feedback] = useState("");
 
     const [dialogue, setDialogue] = useState<string | null>(null);
+    const [timeTaken, setTimeTaken] = useState<number | null>(null);
     
 
 
@@ -598,7 +599,7 @@ export default function EscapeRoom() {
             maxWidth: "90%",
             color: isDark ? "#fff" : "#000",
             boxShadow: "0 6px 12px rgba(0,0,0,0.4)",
-            testAlign: "center" as const,
+            textAlign: "center" as const,
         },
         miniGamePopup: {
             position: "fixed" as "fixed",
@@ -649,6 +650,19 @@ export default function EscapeRoom() {
             fontWeight: "bold",
             cursor: "pointer",
         },
+        escaped: {
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: "80vh",
+            background: "linear-gradient(135deg, #4facfe, #00f2f3)",
+            color: "#fff",
+            textAlign: "center",
+            borderRadius: "12px",
+            padding: "30px",
+            boxShadow: "0 8px 20px rgba(0,0,0,0.3)",
+        } as React.CSSProperties,
 
     };
 
@@ -727,8 +741,8 @@ export default function EscapeRoom() {
                                     <li>3. When the timer begins, Stage 1 will appear.</li>
                                     <li>4. Solve all coding challenges before time runs out!</li>
                                     <li> </li>
-                                    <li>Tip: For beginners, 20 minutes is suggested</li>
-                                    <li>Experts, try escaping in 15!</li>
+                                    <li><strong>Tip: For beginners, 10 minutes is suggested</strong></li>
+                                    <li><strong>Experts, try escaping in 5!</strong></li>
                                 </ol>
                                 {/* Escape Button*/}
                                 <button onClick={() => {
@@ -852,8 +866,10 @@ export default function EscapeRoom() {
                                         if (!escapeKeyFound) {
                                             setDialogue("There looks to be some sort of strange key hole on the spine of this book. Could there be a key hidden somewhere?")
                                         } else {
-                                            setDialogue("The key fits, you escaped!")
+                                            setDialogue(null);
+                                            setTimeTaken((parseInt(inputTime, 10) * 60) - (timeLeft ?? 0));
                                             //Followed by success screen
+                                            setStage(4);
                                         }
                                     }}
                                     style={{cursor: "pointer"}}/>
@@ -998,6 +1014,19 @@ export default function EscapeRoom() {
                                     onClick={() => setDialogue(null)}
                                 >Close</button>
                             </div>
+                        </div>
+                    )}
+                    {/* Stage 4 */}
+                    {stage === 4 && (
+                        <div style={styles.escaped}>
+                            <h1 style={{fontSize: "3rem", marginBottom: "20px"}}>Congratulations!</h1>
+                            <p style={{fontSize: "1.5rem", marginBottom: "10px"}}>You escaped the room!</p>
+                            {timeTaken !== null && (
+                                <p style={{fontSize: "1.2rem", marginBottom: "20px"}}>Your completion time: <strong>{formatTime(timeTaken)}</strong></p>
+                            )}
+                            <button onClick={() => window.location.reload()}
+                                style={{padding: "12px 24px", borderRadius: "6px", border: "none", backgroundColor: "#007bff", color: "#fff", fontWeight: "bold", cursor: "pointer", fontSize: "1rem"}}>Play Again
+                            </button>
                         </div>
                     )}
                 </main>  
