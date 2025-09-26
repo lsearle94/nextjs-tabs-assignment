@@ -828,17 +828,17 @@ export default function EscapeRoom() {
                                 {/* Clickable objects*/}
                                 {/* Desk */}
                                 <svg viewBox= "0 0 100 100" style={styles.overlay}>
-                                    <polygon points="19,70 37,62 47,65 28,73" fill="rgba(0,0,255,0.3)" 
+                                    <polygon points="19,70 37,62 47,65 28,73" fill="transparent" 
                                     onClick={() => setDialogue("You notice some scribbles on the desk:\n\n'To unlock the secrets, you'll need to count them all\nstart from nothing and stop at a thousand\nA repeating loop might help you on your way...'")}
                                     style={{cursor: "pointer"}}/>
                                 
                                     {/* Couch */}
-                                    <polygon points="50,90 74,81 85,89 65,98" fill="rgba(0,255,0,0.3)" onClick={() => 
+                                    <polygon points="50,90 74,81 85,89 65,98" fill="transparent" onClick={() => 
                                     setDialogue("Hidden under the couch cushion: a note that say's: \n'What is forward is not the key,\nonly when reversed will you see...'")}
                                         style={{cursor: "pointer"}}/>
 
                                     {/* Pot Plant */}
-                                    <polygon points="13,82 20,81.5 18.5,87 14,87.5" fill="rgba(255,165,0,0.3)" onClick={() => {
+                                    <polygon points="13,82 20,81.5 18.5,87 14,87.5" fill="transparent" onClick={() => {
                                         if (!plantPasswordFound) {
                                             setDialogue("Thats odd, there was a note inside this pot plant with a password: P@s5wOrD!");
                                             setPlantPasswordFound(true);
@@ -849,7 +849,7 @@ export default function EscapeRoom() {
                                     style={{cursor: "pointer"}}/>
 
                                     {/* Wall Image */}
-                                    <polygon points="54,38 59,40 59,50 54,48" fill="rgba(255,0,0,0.3)" onClick={() => {
+                                    <polygon points="54,38 59,40 59,50 54,48" fill="transparent" onClick={() => {
                                         if (!miniGame1Complete || !miniGame2Complete) {
                                             setDialogue("There's a hidden safe behind this picture! Now to find the code to open it...");
                                         } else if (!safeOpened) {
@@ -862,7 +862,7 @@ export default function EscapeRoom() {
                                     style={{cursor: "pointer"}}/>
 
                                     {/* Book */}
-                                    <polygon points="71,72 72,72 72,76 71,76" fill="rgba(255,165,0,0.3)" onClick={() => {
+                                    <polygon points="71,72 72,72 72,76 71,76" fill="transparent" onClick={() => {
                                         if (!escapeKeyFound) {
                                             setDialogue("There looks to be some sort of strange key hole on the spine of this book. Could there be a key hidden somewhere?")
                                         } else {
@@ -875,7 +875,7 @@ export default function EscapeRoom() {
                                     style={{cursor: "pointer"}}/>
 
                                     {/* Computer */}
-                                    <polygon points="27,61 33.5,58.5 34,63 27,66" fill="rgba(0,255,255,0.3)" onClick={() => {
+                                    <polygon points="27,61 33.5,58.5 34,63 27,66" fill="transparent" onClick={() => {
                                         if (!plantPasswordFound) {
                                             setDialogue("Hmm, it's locked. I wonder if there is a password around here somewhere...");
                                         } else {
@@ -970,7 +970,7 @@ export default function EscapeRoom() {
                                         {miniGame1Complete && miniGame2Complete && (
                                             <div>
                                                 <p>You solved both mini games!</p>
-                                                <p>The full code fior the safe is: <strong>2745-ASDF</strong></p>
+                                                <p>The full code for the safe is: <strong>2745-ASDF</strong></p>
                                                 <button style={styles.miniGameButton} onClick={() => setShowMiniGame(false)}>Close</button>
                                             </div>
                                         )}
@@ -987,7 +987,10 @@ export default function EscapeRoom() {
                                         onChange={(e) => setSafeCodeInput(e.target.value)}
                                         style={{width: "100%", padding: "8px", marginBottom: "10px"}}>
                                         </input>
-                                        <button onClick={() => {
+                                        <button style={styles.miniGameButton}
+                                        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = styles.miniGameButtonHover.backgroundColor)}
+                                        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = styles.miniGameButton.backgroundColor)}
+                                        onClick={() => {
                                             if (safeCodeInput === "2745-ASDF") {
                                                 setDialogue("The safe opened! There's a key inside.");
                                                 setSafeOpened(true);
@@ -997,7 +1000,7 @@ export default function EscapeRoom() {
                                                 setDialogue("Incorrect code.");
                                             }
                                         }}>Unlock</button>
-                                        <button onClick={() => setShowSafePopup(false)} style={{marginLeft: "10px"}}>Cancel</button>
+                                        <button onClick={() => setShowSafePopup(false)} style={styles.miniGameCloseButton}>Cancel</button>
                                     </div>
                                 </div>
                             )}
