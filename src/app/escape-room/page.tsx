@@ -179,11 +179,10 @@ export default function EscapeRoom() {
     const [miniGame1Feedback, setMiniGame1Feedback] = useState("");
     const [showMiniGame, setShowMiniGame] = useState(false);
     const [miniGame2Code, setMiniGame2Code] = useState(`
-        // TO DO: Reverse the string
         let text = "SAFE PASSWORD";
         let reversed = text; 
-        // console.log(reversed)
-        // `);
+        console.log(reversed)
+        `);
     const [miniGame2Feedback, setMiniGame2Feedback] = useState("");
 
     const [dialogue, setDialogue] = useState<string | null>(null);
