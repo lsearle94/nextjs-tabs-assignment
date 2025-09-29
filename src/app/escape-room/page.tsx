@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import Breadcrumbs from '../components/breadcrumbs'
-import {motion} from "framer-motion";
 
 //Escape-Room Page
 export default function EscapeRoom() {
@@ -174,7 +173,6 @@ export default function EscapeRoom() {
     const [showSafePopup, setShowSafePopup] = useState(false);
     const [safeCodeInput, setSafeCodeInput] = useState("");
     //Computer mini-game states
-    const [showMiniGame1, setShowMiniGame1] = useState(false);
     const [miniGame1Code, setMiniGame1Code] = useState("");
     const [miniGame1Feedback, setMiniGame1Feedback] = useState("");
     const [showMiniGame, setShowMiniGame] = useState(false);
@@ -190,6 +188,8 @@ export default function EscapeRoom() {
     
 
 
+
+
     //Page Styling
     const styles = {
         page: {
@@ -202,7 +202,7 @@ export default function EscapeRoom() {
             backgroundColor: isDark ? 'linear-gradient(90deg, #1e1e1e, #333)' : 'linear-gradient(90deg, #4facfe, #00f2fe)',
             padding: '25px 25px',
             borderBottom: `2px solid ${isDark ? '#444' : '#ccc'}`,
-            position: 'relative' as 'relative',
+            position: 'relative' as const,
             borderRadius: '8px',
             boxShadow: isDark ? '0 4px 6px rgba(34, 32, 32, 1)' : '0 4px 6px rgba(204, 200, 200, 1)',
         },
@@ -221,7 +221,7 @@ export default function EscapeRoom() {
             display: 'flex',
             alignItems: 'center',
             gap: '20px',
-            position: 'relative' as 'relative',
+            position: 'relative' as const,
         },
         link: {
             color: isDark ? '#5fa0e2ff' : '#185b7aff',
@@ -235,7 +235,7 @@ export default function EscapeRoom() {
             textDecoration: 'none',
         },
         dropdown: {
-            position: 'absolute' as 'absolute',
+            position: 'absolute' as const,
             top: '100%',
             right: 0,
             backgroundColor: isDark ? '#333' : '#fff',
@@ -254,7 +254,7 @@ export default function EscapeRoom() {
             textDecoration: 'none',
         },
         switchContainer: {
-            position: 'relative' as 'relative',
+            position: 'relative' as const,
             width: '50px',
             height: '24px',
             backgroundColor: isDark ? '#555' : '#ccc',
@@ -263,7 +263,7 @@ export default function EscapeRoom() {
             transition: 'background-color 0.3s',
         },
         switchCircle: {
-            position: 'absolute' as 'absolute',
+            position: 'absolute' as const,
             top: '2px',
             left: isDark ? '26px' : '2px',
             width: '20px',
@@ -276,7 +276,7 @@ export default function EscapeRoom() {
             width: '30px',
             height: '22px',
             display: 'flex',
-            flexDirection: 'column' as 'column',
+            flexDirection: 'column' as const,
             justifyContent: 'space-between',
             cursor: 'pointer',
         },
@@ -300,7 +300,7 @@ export default function EscapeRoom() {
         footer: {
             marginTop: '40px',
             padding: '15px',
-            textAlign: 'center' as 'center',
+            textAlign: 'center' as const,
             backgroundColor: isDark ? '#1e1e1e' : '#f0f0f0',
             borderTop: `2px solid ${isDark ? '#444' : '#ccc'}`,
             color: isDark ? '#fff' : '#000',
@@ -340,7 +340,7 @@ export default function EscapeRoom() {
             marginTop: "15px",
             fontWeight: "bold",
             fontSize: "1.5rem",
-            textAlign: "center" as "center",
+            textAlign: "center" as const,
             padding: "10px",
             borderRadius: "6px",
             backgroundColor: isDark ? "#1e1e1e" : "#f4f4f4",
@@ -377,7 +377,7 @@ export default function EscapeRoom() {
             width: "70%",
             height: "700px",
             borderRadius: "8px",
-            position: "relative" as "relative",
+            position: "relative" as const,
             zIndex: 1,
         },
         instructionBox: {
@@ -391,7 +391,7 @@ export default function EscapeRoom() {
             fontSize: "1rem",
             lineHeight: "1.6",
             zIndex: 2,
-            position: "relative" as "relative",
+            position: "relative" as const,
         },
         editableCode: {
             width:"100%",
@@ -512,10 +512,10 @@ export default function EscapeRoom() {
             backgroundColor: isDark ? "rgba(30,30,30,0.85)" : "rgba(255,255,255,0.9)", 
             boxShadow: isDark ? "0 4px 8px rgba(0,0,0,0.7)" : "0 4px 8px rgba(0,0,0,0.15)", 
             marginBottom: "20px", 
-            textAlign: "center" as "center",
+            textAlign: "center" as const,
         },
         roomWrapper: {
-            position: "relative" as "relative",
+            position: "relative" as const,
             width: "100%",
             maxWidth: "1600px",
             margin: "0 auto",
@@ -535,7 +535,7 @@ export default function EscapeRoom() {
             display: "block",
         },
         roomBackground: {
-            position: "relative" as "relative", 
+            position: "relative" as const, 
             width: "100%", 
             height: "100vh", 
             
@@ -544,19 +544,19 @@ export default function EscapeRoom() {
             backgroundPosition: "center 70%",
         },
         stage3Hotspot: {
-            position: "absolute" as "absolute",
+            position: "absolute" as const,
             cursor: "pointer",
             border: "2px solid transparent", //Invisible by default
         },
         overlay: {
-            position: "absolute" as "absolute",
+            position: "absolute" as const,
             top: 0,
             left: 0,
             width: "100%",
             height: "100%",
         },
         computerPopup: {
-            position: "fixed" as "fixed",
+            position: "fixed" as const,
             top: 0,
             left: 0,
             right: 0,
@@ -568,7 +568,7 @@ export default function EscapeRoom() {
             zIndex: 1000,
         },
         safePopup: {
-            position: "fixed" as "fixed",
+            position: "fixed" as const,
             top: 0,
             left: 0,
             right: 0,
@@ -580,7 +580,7 @@ export default function EscapeRoom() {
             zIndex: 1000,
         },
         dialoguePopup: {
-            position: "fixed" as "fixed",
+            position: "fixed" as const,
             top: 0,
             left: 0,
             right: 0,
@@ -602,7 +602,7 @@ export default function EscapeRoom() {
             textAlign: "center" as const,
         },
         miniGamePopup: {
-            position: "fixed" as "fixed",
+            position: "fixed" as const,
             top: 0,
             left: 0,
             right: 0,
@@ -756,7 +756,7 @@ export default function EscapeRoom() {
                                     }
                                 }}
                                 style={styles.startButton}
-                                >Let's Escape!</button>
+                                >Lets Escape!</button>
                             </div>
                             <div style={styles.imageBox}></div>
                         </div>
@@ -945,7 +945,7 @@ export default function EscapeRoom() {
                                         {miniGame1Complete && !miniGame2Complete && (
                                             <div>
                                                 <h3>Minigame 2: Reverse the string</h3>
-                                                <p>Update the below code so that the string <strong>"SAFE PASSWORD"</strong> appears in reverse.</p>
+                                                <p>Update the below code so that the string <strong>SAFE PASSWORD</strong> appears in reverse.</p>
                                                 <textarea value={miniGame2Code} onChange={(e) => setMiniGame2Code(e.target.value)} style={{width: "100%", height: "120px", marginBottom: "10px"}}>
                                                 </textarea>
                                                 <button style={styles.miniGameButton} 

@@ -57,7 +57,7 @@ export default function PreLab() {
             backgroundColor: isDark ? 'linear-gradient(90deg, #1e1e1e, #333)' : 'linear-gradient(90deg, #4facfe, #00f2fe)',
             padding: '25px 25px',
             borderBottom: `2px solid ${isDark ? '#444' : '#ccc'}`,
-            position: 'relative' as 'relative',
+            position: 'relative' as const,
             borderRadius: '8px',
             boxShadow: isDark ? '0 4px 6px rgba(34, 32, 32, 1)' : '0 4px 6px rgba(204, 200, 200, 1)',
         },
@@ -76,7 +76,7 @@ export default function PreLab() {
             display: 'flex',
             alignItems: 'center',
             gap: '20px',
-            position: 'relative' as 'relative',
+            position: 'relative' as const,
         },
         link: {
             color: isDark ? '#5fa0e2ff' : '#185b7aff',
@@ -90,7 +90,7 @@ export default function PreLab() {
             textDecoration: 'none',
         },
         dropdown: {
-            position: 'absolute' as 'absolute',
+            position: 'absolute' as const,
             top: '100%',
             right: 0,
             backgroundColor: isDark ? '#333' : '#fff',
@@ -109,7 +109,7 @@ export default function PreLab() {
             textDecoration: 'none',
         },
         switchContainer: {
-            position: 'relative' as 'relative',
+            position: 'relative' as const,
             width: '50px',
             height: '24px',
             backgroundColor: isDark ? '#555' : '#ccc',
@@ -118,7 +118,7 @@ export default function PreLab() {
             transition: 'background-color 0.3s',
         },
         switchCircle: {
-            position: 'absolute' as 'absolute',
+            position: 'absolute' as const,
             top: '2px',
             left: isDark ? '26px' : '2px',
             width: '20px',
@@ -131,7 +131,7 @@ export default function PreLab() {
             width: '30px',
             height: '22px',
             display: 'flex',
-            flexDirection: 'column' as 'column',
+            flexDirection: 'column' as const,
             justifyContent: 'space-between',
             cursor: 'pointer',
         },
@@ -155,7 +155,7 @@ export default function PreLab() {
         footer: {
             marginTop: '40px',
             padding: '15px',
-            textAlign: 'center' as 'center',
+            textAlign: 'center' as const,
             backgroundColor: isDark ? '#1e1e1e' : '#f0f0f0',
             borderTop: `2px solid ${isDark ? '#444' : '#ccc'}`,
             color: isDark ? '#fff' : '#000',
