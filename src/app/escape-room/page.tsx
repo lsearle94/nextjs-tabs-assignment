@@ -663,6 +663,27 @@ export default function EscapeRoom() {
             padding: "30px",
             boxShadow: "0 8px 20px rgba(0,0,0,0.3)",
         } as React.CSSProperties,
+        save: {
+            padding: "12px 24px",
+            borderRadius: "6px",
+            border: "none",
+            backgroundColor: "28a745",
+            color: "#fff",
+            fontWeight: "bold",
+            cursor: "pointer",
+            fontSize: "1rem",
+            marginRight: "10px",
+        },
+        playAgain: {
+            padding: "12px 24px", 
+            borderRadius: "6px", 
+            border: "none", 
+            backgroundColor: "#007bff", 
+            olor: "#fff", 
+            fontWeight: "bold", 
+            cursor: "pointer", 
+            fontSize: "1rem"
+        },
 
     };
 
@@ -1027,8 +1048,32 @@ export default function EscapeRoom() {
                             {timeTaken !== null && (
                                 <p style={{fontSize: "1.2rem", marginBottom: "20px"}}>Your completion time: <strong>{formatTime(timeTaken)}</strong></p>
                             )}
+                            {/* Save Button */}
+                            <button onClick={async () => {
+                                try {
+                                    const response = await fetch("/api/attempts", {
+                                        method: "POST",
+                                        headers: {
+                                            "Content-Type": "application/json",
+                                        },
+                                        body: JSON.stringify({
+                                            player: "Laura",
+                                            timeTaken: timeTaken,
+                                            success: true,
+                                        }),
+                                    });
+                                    if (response.ok){
+                                        alert("Your escape attempt was saved");
+                                    } else {
+                                        alert("Failed to save attempt");
+                                    }
+                                } catch (error) {
+                                    console.error("Save error:", error);
+                                    alert("Error while saving");
+                                }
+                            }} style={styles.save}>Save Attempt</button>
                             <button onClick={() => window.location.reload()}
-                                style={{padding: "12px 24px", borderRadius: "6px", border: "none", backgroundColor: "#007bff", color: "#fff", fontWeight: "bold", cursor: "pointer", fontSize: "1rem"}}>Play Again
+                                style={styles.playAgain}>Play Again
                             </button>
                         </div>
                     )}
