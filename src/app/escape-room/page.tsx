@@ -186,6 +186,8 @@ export default function EscapeRoom() {
     const [dialogue, setDialogue] = useState<string | null>(null);
     const [timeTaken, setTimeTaken] = useState<number | null>(null);
     
+    const [showSavePopup, setShowSavePopup] = useState(false);
+    const [playerName, setPlayerName] = useState("");
 
 
 
@@ -667,7 +669,7 @@ export default function EscapeRoom() {
             padding: "12px 24px",
             borderRadius: "6px",
             border: "none",
-            backgroundColor: "28a745",
+            backgroundColor: "#28a745",
             color: "#fff",
             fontWeight: "bold",
             cursor: "pointer",
@@ -683,6 +685,37 @@ export default function EscapeRoom() {
             fontWeight: "bold", 
             cursor: "pointer", 
             fontSize: "1rem"
+        },
+        popup: {
+            position: "fixed" as const,
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            background: "rgba(0,0,0,0.6)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 1000,
+        },
+        inputBox: {
+            width: "100%",
+            padding: "8px",
+            marginBottom: "10px",
+            border: "1px solid #ccc",
+            borderRadius: "4px",
+            backgroundColor: "#fff",
+            color: "#000",
+        },
+        name: {
+            padding: "10px 20px",
+            borderRadius: "6px",
+            border: "none",
+            backgroundColor: "#28a745",
+            color: "#fff",
+            fontWeight: "bold",
+            cursor: "pointer",
+            marginRight: "10px",
         },
 
     };
@@ -1049,32 +1082,50 @@ export default function EscapeRoom() {
                                 <p style={{fontSize: "1.2rem", marginBottom: "20px"}}>Your completion time: <strong>{formatTime(timeTaken)}</strong></p>
                             )}
                             {/* Save Button */}
-                            <button onClick={async () => {
-                                try {
-                                    const response = await fetch("/api/attempts", {
-                                        method: "POST",
-                                        headers: {
-                                            "Content-Type": "application/json",
-                                        },
-                                        body: JSON.stringify({
-                                            player: "Laura",
-                                            timeTaken: timeTaken,
-                                            success: true,
-                                        }),
-                                    });
-                                    if (response.ok){
-                                        alert("Your escape attempt was saved");
-                                    } else {
-                                        alert("Failed to save attempt");
-                                    }
-                                } catch (error) {
-                                    console.error("Save error:", error);
-                                    alert("Error while saving");
-                                }
-                            }} style={styles.save}>Save Attempt</button>
-                            <button onClick={() => window.location.reload()}
-                                style={styles.playAgain}>Play Again
-                            </button>
+                            <button onClick={() => setShowSavePopup(true)} style={styles.save}>Save Attempt</button>
+                            {/* Play Again Button */}
+                            <button onClick={() => window.location.reload()} style={styles.playAgain}>Play Again</button>
+                            {/* Save Attempt Popup */}
+                            {showSavePopup && (
+                                <div style={styles.popup}>
+                                    <div style={{background: "#fff", padding: "20px", borderRadius: "8px", width: "300px", textAlign: "center",}}>
+                                        <h3>Save your attempt</h3>
+                                        <p>Please enter your name: </p>
+                                        <input type="text" value={playerName} onChange={(e) => setPlayerName(e.target.value)} style={styles.inputBox}></input>
+                                        <div style={{marginTop: "10px"}}>
+                                            <button onClick={async () => {
+                                                try {
+                                                const response = await fetch("/api/attempts", {
+                                                    method: "POST",
+                                                    headers: {
+                                                    "Content-Type": "application/json",
+                                                    },
+                                                    body: JSON.stringify({
+                                                    player: playerName || "Anonymous",
+                                                    timeTaken: timeTaken,
+                                                    success: true,
+                                                    }),
+                                                });
+                                                if (response.ok) {
+                                                    alert("Your attempt was saved!");
+                                                    setShowSavePopup(false);
+                                                } else {
+                                                    alert("Failed to save attempt.");
+                                                }
+                                                } catch (error) {
+                                                console.error("Save error:", error);
+                                                alert("⚠️ Error while saving.");
+                                                }
+                                            }}
+                                            style={styles.name}>Save</button>
+                                            <button onClick={() => setShowSavePopup(false)} 
+                                            style={{padding: "10px 20px", borderRadius: "6px", border: "none", backgroundColor: "#dc3545", color: "#fff", fontWeight: "bold", cursor: "pointer",}}>
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     )}
                 </main>  
