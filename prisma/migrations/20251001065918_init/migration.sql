@@ -1,0 +1,8 @@
+-- CreateTable
+CREATE TABLE "EscapeAttempt" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "player" TEXT NOT NULL,
+    "timeTaken" INTEGER NOT NULL,
+    "success" BOOLEAN NOT NULL,
+    "createAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
