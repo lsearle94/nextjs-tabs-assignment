@@ -142,7 +142,8 @@ export default function EscapeRoom() {
     const [userAnswer, setUserAnswer] = useState<string>(initialCode);
     const[feedback, setFeedback] = useState<string>("");
     const checkAnswer = () => {
-        if (userAnswer.includes('console.log("Find the Key!");')) {
+        const cleaned = userAnswer.replace(/\s/g, "");
+        if (cleaned.includes('console.log("FindtheKey!");')) {
             setFeedback("Correct!");
         } else {
             setFeedback("Not quite there, keep trying!")
@@ -824,6 +825,7 @@ export default function EscapeRoom() {
                             <p>The code you see here is corrupted! In order to escape this room, you must fix the phrase so it reads this exactly: <strong>Find the Key!</strong></p>
                             {/* Editable Code Section*/}
                             <textarea
+                            data-testid="stage1-editor"
                                 value={userAnswer} onChange={(e) => setUserAnswer(e.target.value)} 
                                 style={styles.editableCode}
                             />
