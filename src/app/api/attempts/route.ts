@@ -35,7 +35,7 @@ export async function POST(req: Request) {
         success: body.success,
       },
     });
-    logAction("CREATE_ATTEMPTS_SUCCESS", newAttempt);
+    logAction("CREATE_ATTEMPT_SUCCESS", newAttempt);
     return NextResponse.json(newAttempt);
   } catch (error) {
     logAction("CREATE_ATTEMPT_ERROR", {error});

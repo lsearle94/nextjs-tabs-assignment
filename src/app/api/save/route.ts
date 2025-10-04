@@ -6,10 +6,10 @@ const prisma = new PrismaClient();
 export async function POST(req: Request) {
     try {
         const body = await req.json();
-        const {playerName, timeTaken, success } = body;
+        const {player, timeTaken, success } = body;
 
-        const attempt = await prisma.escape_attempts.create({
-            data: {playerName, timeTaken, success}
+        const attempt = await prisma.escapeAttempt.create({
+            data: {player, timeTaken, success}
         });
         return NextResponse.json(attempt);
     } catch (error) {
