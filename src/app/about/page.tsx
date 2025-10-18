@@ -210,6 +210,12 @@ export default function About() {
                         <source src="/CSE3CWARecording.mp4" type="video/mp4"/>
                     </video>
 
+                    <h1>Please see below video for Part 2 of this website - Escape Room Challenge </h1>
+
+                    <video controls width="100%" style={{maxWidth: '800px', display: 'block', margin: '20px auto', borderRadius: '8px'}}>
+                        <source src="/CSE3CWARecording2.mp4" type="video/mp4"/>
+                    </video>
+
 
                 </main>  
             </div>

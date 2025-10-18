@@ -1,24 +1,33 @@
-import {NextResponse} from 'next/server';
-import {PrismaClient} from '@prisma/client';
-const prisma = new PrismaClient();
+import { NextRequest, NextResponse } from 'next/server'
+import { PrismaClient } from '@prisma/client'
 
-export async function GET(_: Request, {params}: {params: {attemptId: string}}){
-    const attempt = await prisma.escapeAttempt.findUnique({
-        where: {id: Number(params.attemptId)},
-    });
+const prisma = new PrismaClient()
 
-    if (!attempt) return NextResponse.json({ error: 'Not Found' }, {status: 404});
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { attemptId: string } }
+): Promise<Response> {
+  const attemptId = parseInt(params.attemptId, 10)
 
-    const html = `
+  const attempt = await prisma.escapeAttempt.findUnique({
+    where: { id: attemptId },
+  })
+
+  if (!attempt) {
+    return NextResponse.json({ error: 'Not Found' }, { status: 404 })
+  }
+
+  const html = `
     <html>
-        <head><title>Attempt ${attempt.id}</title></head>
-        <body>
-            <h1>Escape Room Attempt</h1>
-            <p><strong>Player:</strong> ${attempt.player}</p>
-            <p><strong>Time Taken:</strong> ${attempt.timeTaken}s</p>
-            <p><strong>Success:</strong> ${attempt.success ? 'Yes' : 'No'}</p>
-        </body>
+      <head><title>Attempt ${attempt.id}</title></head>
+      <body>
+        <h1>Escape Room Attempt</h1>
+        <p><strong>Player:</strong> ${attempt.player}</p>
+        <p><strong>Time Taken:</strong> ${attempt.timeTaken}s</p>
+        <p><strong>Success:</strong> ${attempt.success ? 'Yes' : 'No'}</p>
+      </body>
     </html>
-    `;
-    return new Response(html, {headers: {'Content-Type': 'text/html'}});
+  `
+
+  return new Response(html, { headers: { 'Content-Type': 'text/html' } })
 }
